@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
+  <%- include('./shared/head')%>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <%- include('./shared/header')%>
+    <h1><%= nombrePag %></h1>
+    <p>Welcome to <%= nombrePag %></p>
+    <%- include('./shared/footer')%>
   </body>
 </html>
