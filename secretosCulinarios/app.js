@@ -8,6 +8,7 @@ const sequelize = require('./database/connect.js')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const recetasRouter = require('./routes/recetas')
+const registerRouter = require('./routes/register')
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/recetas', recetasRouter)
+app.use('/register', registerRouter)
 
 const conexionDB = async () => {
   try {

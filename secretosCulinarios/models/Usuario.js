@@ -1,7 +1,7 @@
 const { Datatypes } = require('sequelize')
 const { sequelize } = require('../database/connect.js')
 
-const Usuario = sequelize.define('Usuario', {
+const Usuario = sequelize.init('Usuario', {
   id: {
     type: Datatypes.INTEGER,
     primaryKey: true,
@@ -27,6 +27,10 @@ const Usuario = sequelize.define('Usuario', {
     type: Datatypes.STRING,
     default: null
   }
+},
+{
+  sequelize,
+  tableName:'usuarios'
 })
 
 module.exports = Usuario;
