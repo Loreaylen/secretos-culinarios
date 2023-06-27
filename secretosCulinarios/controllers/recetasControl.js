@@ -1,3 +1,6 @@
+
+
+
 const recetasControl = {
 'mostrarTodas': function(req, res) {
 res.send('recetass')
