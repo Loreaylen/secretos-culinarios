@@ -1,1 +1,21 @@
-<p>Login</p>
+<!DOCTYPE html>
+<html>
+  <%- include('./shared/head')%>
+  <body>
+    <%- include('./shared/header')%>
+    
+    <main>
+<h1>Iniciar sesión</h1>
+      <form action="/login" method="post" novalidate>
+        <label for="emailUsuario">Email:</label>
+        <input type="text" name="emailUsuario">
+
+        <label for="contraseñaUsuario">Contraseña:</label>
+        <input type="text" name="contraseñaUsuario">
+
+        <input type="submit" value="Entrar">
+      </form>
+    </main>
+    <%- include('./shared/footer')%>
+  </body>
+</html>
