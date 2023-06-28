@@ -1,30 +1,30 @@
-const { Datatypes } = require('sequelize')
-const { sequelize } = require('../database/connect.js')
+const { DataTypes}   = require('sequelize')
+const  sequelize  = require('../database/connect.js')
 
-const Usuario = sequelize.init('Usuario', {
+const Usuario = sequelize.define('Usuario', {
   id: {
-    type: Datatypes.INTEGER,
+    type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
   nombre: {
-    type: Datatypes.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
-  apellido: {
-    type: Datatypes.STRING,
+  mail: {
+    type: DataTypes.STRING,
     allowNull: false
   },
   usuario: {
-    type: Datatypes.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   contraseña: {
-    type: Datatypes.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   url_avatar: {
-    type: Datatypes.STRING,
+    type: DataTypes.STRING,
     default: null
   }
 },

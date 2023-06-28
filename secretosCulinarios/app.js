@@ -4,7 +4,18 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+
 const sequelize = require('./database/connect.js')
+const conexionDB = async () => {
+  try {
+    await sequelize.authenticate()
+    console.log('Conexión exitosa a la BD.')
+  } catch (err) {
+    console.log(err)
+  }
+}
+conexionDB()
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const recetasRouter = require('./routes/recetas')
@@ -22,20 +33,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/recetas', recetasRouter)
 app.use('/register', registerRouter)
-
-const conexionDB = async () => {
-  try {
-    await sequelize.authenticate()
-    console.log('Conexión exitosa a la BD.')
-  } catch (err) {
-    console.log(err)
-  }
-}
-conexionDB()
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
