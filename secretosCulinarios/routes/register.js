@@ -8,11 +8,13 @@ router.get('/', mostrarForm)
 
 router.post('/', checkSchema(registerValidators), function(req, res){
 const resultadosVal = validationResult(req).array()
+console.log('FORM', req.body)
 if(resultadosVal.length > 0){
   console.log(resultadosVal)
   res.render('register', {nombrePag: 'Registro', resultadosVal: resultadosVal})
+  return
 }
-else registroControl.submit(req, res)
+submit(req, res)
 })
 
 module.exports = router;

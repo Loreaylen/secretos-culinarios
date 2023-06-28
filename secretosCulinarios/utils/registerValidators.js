@@ -1,15 +1,23 @@
+// Comparar password
+const compararPass = (val, {req}) => {
+  if(val !== req.body.contraseña){
+    throw new Error('La contraseña no coincide')
+  }
+  return true
+}
+
 const registerValidators = {
 nombre: {
-  isEmpty: {
+  notEmpty: {
     errorMessage: 'Campo obligatorio'
   },
   matches: { 
-    options: /^[A-Za-z\s]*$/,
-    errorMessage: 'El nombre no debe contener números'
+    options: /^[A-Za-z\s]+.*$/,
+    errorMessage: 'El nombre no debe contener números ni caracteres especiales'
   }
 },
 nombreUsuario: {
-  isEmpty: {
+  notEmpty: {
     errorMessage: 'Campo obligatorio'
   },
   isLength: {
@@ -18,14 +26,14 @@ nombreUsuario: {
       max: 20
     },
     errorMessage: 'El nombre de usuario debe contener entre 8 y 20 caracteres, sin espacios.'
-  },
+   },
   matches: {
-    options: /\s/,
+    options: /^\S*$/,
     errorMessage: 'El nombre de usuario debe contener entre 8 y 20 caracteres, sin espacios.'
   }
 },
 email: {
-  isEmpty: {
+  notEmpty: {
     errorMessage: 'Campo obligatorio'
    },
   isEmail: {
@@ -33,7 +41,7 @@ email: {
   }
 },
 contraseña: {
-  isEmpty: {
+  notEmpty: {
     errorMessage: 'Campo obligatorio'
    },
    isStrongPassword: {
@@ -48,12 +56,11 @@ contraseña: {
   }
 },
 contraseña2: {
-  isEmpty: {
+  notEmpty: {
     errorMessage: 'Campo obligatorio'
    },
-   equals: {
-    options: this.contraseña,
-    errorMessage: 'La contraseña no coincide'
+   custom: {
+    options: compararPass
    }
 }
 }
