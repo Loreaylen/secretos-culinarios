@@ -21,8 +21,7 @@
   <section class="menuUsuarioCtn">
     <div class="datosUsuario">
       <div class="fotoPerfil">
-        <img src="<%= sesion && sesion.avatar ? sesion.avatar : '../../public/images/fotoEnBlanco.png' %>" alt="avatar de usuario">
-        <img src="../../public/images/fotoEnBlanco.png" alt="" style="width: 100px; height: auto;">
+        <img src="<%= sesion && sesion.avatar ? sesion.avatar : '/images/fotoEnBlanco.png' %>" alt="avatar de usuario">
       </div>
       <h3 class="nombreUsuario"><%- sesion.usuario%></h3>
     </div>
