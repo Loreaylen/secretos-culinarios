@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <%- include('./shared/head')%>
+  <body>
+    <%- include('./shared/header')%>
+    
+    <main>
+<h1>Mi perfil</h1>
+
+<!-- <section class="avatarUsuarioContainer">
+ <div class="avatarUsuario">
+    <img src="<%- sesion.avatar || '/images/fotoEnBlanco.png' %>" alt="Avatar usuario">
+  </div> 
+
+</section>
+      <form action="/perfil/editar" method="post" novalidate>
+        <label for="nombre">Nombre:</label>
+        <input class='inputEditable' type="text" name="nombre" value="<%-sesion.nombre%>" placeholder="<%-sesion.nombre%>" disabled> 
+        <input class='inputEditable' type="text" name="nombre" value="aaaaa" placeholder="aaaaa" disabled>
+        <input type="button" class="botonEditar" name="nombre" value="Editar">
+
+        <label for="usuario">Nombre de usuario</label>
+         <input class='inputEditable' type="text" name="usuario" value="<%-sesion.usuario%>" placeholder="<%-sesion.usuario%>" disabled>
+        <input class='inputEditable' type="text" name="usuario" value="afasf" placeholder="asdadsa" disabled>
+        <input type="button" class="botonEditar" name="usuario" value="Editar">
+
+       <label for="mail">Email</label>
+        <input type="text" name="mail" value="<%-sesion.mail%>" placeholder="<%-sesion.mail%>" disabled> 
+
+        <input type="button" value="Cambiar contraseña">
+
+
+      </form>
+      
+        <input type="button" value="Eliminar cuenta"> -->
+        <input class='inputEditable' type="text" name="usuario" value="afasf" placeholder="asdadsa" disabled>
+        <input type="button" class="botonEditar" name="usuario" value="Editar">
+    </main>
+    <%- include('./shared/footer')%>
+    <%- include('./shared/scripts')%>
+    <script src="/javascripts/editarPerfilUsuario.js"></script>
+  </body>
+</html>

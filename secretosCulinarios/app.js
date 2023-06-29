@@ -18,11 +18,11 @@ const conexionDB = async () => {
 conexionDB()
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 const recetasRouter = require('./routes/recetas')
 const registerRouter = require('./routes/register')
 const loginRouter = require('./routes/login')
 const logoutRouter = require('./routes/logout')
+const usuarioRouter = require('./routes/usuario')
 
 var app = express();
 
@@ -30,8 +30,7 @@ var app = express();
 app.use(session({
   secret: 'asdjgesougbjnsdf123',
   resave: false,
-  saveUninitialized: false,
-  cookie: {maxAge: 100000}
+  saveUninitialized: false
 }))
 
 // view engine setup
@@ -46,11 +45,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/recetas', recetasRouter)
 app.use('/register', registerRouter)
 app.use('/login', loginRouter)
 app.use('/logout', logoutRouter)
+app.use('/usuario', usuarioRouter);
 
 
 // catch 404 and forward to error handler

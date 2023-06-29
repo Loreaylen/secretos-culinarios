@@ -19,3 +19,14 @@ height: auto;
   width: 100px;
   height: auto;
 }
+
+.avatarUsuario {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+}
+
+.avatarUsuario img {
+  width: 100%;
+  height: auto;
+}
