@@ -4,6 +4,10 @@ const  Usuario  = require('../models/Usuario')
 
 const registerControl = {
   'mostrarForm': function(req, res) {
+    if(req.session.user){
+      res.redirect('/')
+      return
+    }
     res.render('register', {nombrePag: 'Registro', resultadosVal: []})
   },
   'submit': async function(req, res){

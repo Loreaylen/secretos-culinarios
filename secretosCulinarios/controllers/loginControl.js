@@ -4,6 +4,10 @@ const Usuario = require('../models/Usuario')
 
 const loginControl = {
   'mostrarLogin': function(req,res){
+    if(req.session.user){
+      res.redirect('/')
+      return
+    }
     res.render('login', {nombrePag: 'Iniciar sesión', sesion: req.session.user || false})
   },
   'iniciarSesion': async function(req,res){
