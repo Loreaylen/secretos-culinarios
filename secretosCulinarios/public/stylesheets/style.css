@@ -6,3 +6,16 @@ body {
 a {
   color: #00B7FF;
 }
+
+
+
+.menuUsuarioCtn .fotoPerfil  {
+width: 200px;
+height: auto;
+
+}
+
+.fotoPerfil img {
+  width: 100px;
+  height: auto;
+}

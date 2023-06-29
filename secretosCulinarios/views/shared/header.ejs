@@ -8,26 +8,31 @@
       <li><a href="/recetas">Recetas</a></li>
     </ul>
   </nav>
+  
 <div class="menuCambiante">
+  <%if(!sesion) {%>
   <section class="inicioRegistro">
     <a href="/login" class="iniciarSesionBtn">Iniciar Sesión</a>
     <a href="/register" class="registrarseBtn">Registrarse</a>
   </section>
+<%}%>
 
+<%if(sesion) {%>
   <section class="menuUsuarioCtn">
     <div class="datosUsuario">
       <div class="fotoPerfil">
-        <img src="" alt="">
+        <img src="<%= sesion && sesion.avatar ? sesion.avatar : '/images/fotoEnBlanco.png' %>" alt="avatar de usuario">
       </div>
-      <h3 class="nombreUsuario">usuario</h3>
+      <h3 class="nombreUsuario"><%- sesion.usuario%></h3>
     </div>
-
+    
     <nav class="menuUsuario">
       <li><a href="">Perfil</a></li>
       <li><a href="">Mis Recetas</a></li>
       <li><a href="">Favoritos</a></li>
-      <li><button>Cerrar Sesión</button></li>
+      <li><a href="/logout">Cerrar Sesión</a></li>
     </nav>
   </section>
+  <%}%>
 
 </header>
