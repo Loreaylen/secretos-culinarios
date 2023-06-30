@@ -15,7 +15,7 @@
 </section>
 
 <% if (typeof success !== 'undefined') { %>
-  <div class="container">
+  <div class="containerMensaje">
     <% if (success) { %>
       <span class="success">El perfil se actualizó correctamente</span>
     <% } else { %>
@@ -42,7 +42,7 @@
 
       </form>
       
-        <input type="button" class="botonEliminar" value="Eliminar cuenta"> 
+        <button class="botonEliminar">Eliminar cuenta</button> 
         
     </main>
     <%- include('./shared/footer')%>

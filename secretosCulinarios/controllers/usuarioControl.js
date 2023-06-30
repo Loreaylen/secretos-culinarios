@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const sequelize = require('../database/connect.js')
+const {cerrarSesion} = require('./logoutControl')
 
 const usuarioControl = {
   'cargarPagUsuario': function (req, res) {
@@ -40,18 +41,36 @@ const usuarioControl = {
     const datosBody = req.body
     const sessionUser = req.session.user
     const id = req.session.user.id
-    const [data, metadat] = await sequelize.query(`CALL actualizar_perfil(${id}, '${datosBody.nombre}', '${datosBody.usuario}')`)
+
+    try{
+      const [data, metadat] = await sequelize.query(`CALL actualizar_perfil(${id}, '${datosBody.nombre}', '${datosBody.usuario}')`)
       sessionUser.nombre = data.nombre;
       sessionUser.usuario = data.usuario;
-    res.render('perfil', {nombrePag: 'Mi perfil', sesion: req.session.user, success: true})
+      res.render('perfil', {nombrePag: 'Mi perfil', sesion: req.session.user, success: true})
+    }
+    catch(err){
+      res.render('perfil', {nombrePag: 'Mi perfil', sesion: req.session.user, success: false})
+    }
+    
      
    
   },
   'eliminarCuenta': async function(req, res){
+    console.log('SESION USER', req.session.user)
     try{
-      const [respuesta, metadata] = await sequelize.query(`DELETE FROM usuarios WHERE id = ${req.session.user.id}`)
-      res.redirect('/')
-      return respuesta
+      const [data, metadata] = await sequelize.query(`CALL eliminar_cuenta(${req.session.user.id})`)
+      if(data.resultado){
+        req.session.destroy(err => {
+          if(err){
+            console.log('ERROR: no se pudo destruir la sesión')
+            return
+          }
+          console.log('SESION DESTRUIDA')
+        })
+      return true
+      }
+      else throw Error('El procedimiento falló')
+
     }
     catch (err){
       console.log('no se pudo eliminar el usuario, ', err)

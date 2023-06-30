@@ -21,7 +21,7 @@ const registerControl = {
         contraseña: bcrypt.hashSync(req.body.contraseña, 10)
       })
       console.log('TE REGISTRASTE!')
-      res.render('index', { nombrePag: 'Home', sesion: false })
+      res.render('index', { nombrePag: 'Home', sesion: req.session.user })
     }
     catch (err) {
       res.render('error', { nomprePag: 'Error', message: 'Error de registro', error: err })

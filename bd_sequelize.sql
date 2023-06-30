@@ -13,11 +13,6 @@ updatedAt DATE
 );
 
 
-
-SELECT * FROM usuarios;
-
-SELECT nombre, contraseña FROM usuarios WHERE mail = 'lag@gmail.com';
-
 INSERT INTO usuarios (nombre, mail, usuario, contraseña, url_avatar, createdAt, updatedAt)
 VALUES
 ('Juan Pérez', 'juan.perez@example.com', 'jperez', '$2a$10$N1WUMpEeAMH3afLxnmK6OuqXh19zQJFA8p2olue7s9XoVlSMvlBMu', NULL, CURDATE(), CURDATE()),
@@ -26,7 +21,7 @@ VALUES
 ('Ana Rodríguez', 'ana.rodriguez@example.com', 'arodriguez', '$2a$10$Dpwe5oybBvSpv0PZS4lvm.VLbj02sudom25c64XK1ng/3h8CI9Zl2', NULL, CURDATE(), CURDATE()),
 ('Luisa Martínez', 'luisa.martinez@example.com', 'lmartinez', '$2a$10$UieFsyI3PmN7rczYmoZu6uWt.q0kl8S9hX51PfX9h8DHTq7GXvMXe', NULL, CURDATE(), CURDATE());
 
--- CREAR PROCEDIMIENTO QUE COMPRUEBE SI EL MAIL EXISTE, SI EXISTE QUE DEVUELVA ERROR, SINO, QUE LO INSERTE EN LA TABLA
+-- CREAR PROCEDIMIENTO QUE COMPRUEBE SI EL MAIL EXISTE, SI EXISTE QUE DEVUELVA ERROR
 DELIMITER $$
 CREATE PROCEDURE `comprobar_mail`(IN usermail VARCHAR(200))
 BEGIN
@@ -38,12 +33,8 @@ ELSE
 END IF;
 END $$
 
-CALL comprobar_mail('lag@example.com');
-SELECT @res AS respuesta;
-
-DROP PROCEDURE comprobar_mail;
 -- CREAR PROCEDIMIENTO QUE ME TRAIGA EL MAIL Y LA CONTRASEÑA
--- Si el mail existe, que traiga los dos, sino, que traiga una cadena vacía
+-- Si el mail existe, que traiga los dos, sino, que traiga false
 DELIMITER //
 CREATE PROCEDURE `login_usuario`(IN usermail VARCHAR(200))
 BEGIN
@@ -55,11 +46,7 @@ END CASE;
 END //
 
 DELIMITER ;
-
--- Se le asigna el out a una variable que después se va a seleccionar normalmente
-CALL login_usuario('ana.rodriguez@example.com'); 
-SELECT * FROM usuarios;
-
+-- Procedimiento para actualizar NOMBRE y NOMBRE DE USUARIO del perfil, nada más.
 DELIMITER //
 CREATE PROCEDURE `actualizar_perfil`(IN idCuenta INT, IN nuevoNombre VARCHAR(100), IN nuevoUsuario VARCHAR(20))
 BEGIN
@@ -70,9 +57,18 @@ SELECT nombre AS nombre, usuario AS usuario FROM usuarios WHERE id = idCuenta ;
 END //
 DROP PROCEDURE actualizar_perfil;
 
+-- Procedimiento para eliminar la cuenta
+DELIMITER //
+CREATE PROCEDURE `eliminar_cuenta`(IN idCuenta INT)
+BEGIN
+IF EXISTS(SELECT * FROM usuarios WHERE id = idCuenta)
+THEN 
+DELETE FROM usuarios WHERE id = idCuenta;
+SELECT TRUE AS resultado;
+ELSE 
+SELECT FALSE AS resultado;
+END IF;
+END //
 
-
-CALL actualizar_perfil(4, 'Kiwi', 'kiwisinoKiwisin')
 SELECT * FROM usuarios;
 DELIMITER ;
-DROP PROCEDURE comprobar_mail;

@@ -5,6 +5,7 @@ const botonEliminar = $(".botonEliminar")
 const modal = $(".modal")
 const botonConfirmarEliminar = $(".botonConfirmarEliminar")
 const botonCancelarEliminar = $(".botonCancelarEliminar")
+const containerMensaje = $('.containerMensaje')
 
 const editarInput = () => {
   inputEditable.removeAttr("disabled");
@@ -32,13 +33,18 @@ const guardarCambios =  () => {
     body: JSON.stringify(guardar),
     cache: "default",
   })
-    .then((res) => {
+  .then((res) => {
       console.log(res);
-      for (let input of inputEditable) {
-        $(input).attr("disabled", true);
-      }
-    })
-    .catch((err) => console.log("hubo un error: ", err));
+      setTimeout(() => {
+      $(containerMensaje).addClass('invisible')
+      }, 1000)
+  })
+  .catch((err) => console.log("hubo un error: ", err))
+  .finally(() => {
+    for (let input of inputEditable) {
+      $(input).attr("disabled", true)
+    }
+  })
 };
 
 const mostrarMensajeEliminar = () => {
@@ -51,10 +57,12 @@ const cancelarEliminacion = () => {
 
 const eliminarCuenta =  () => {
   fetch("/usuario/perfil/eliminar", {
-  method: "POST"
+  method: "DELETE"
 })
 .then((res) => {
   console.log(res);
+  $(modal).addClass('invisible')
+  window.location.replace('http://localhost:3000')
 })
 .catch((err) => console.log("hubo un error: ", err));
 }
