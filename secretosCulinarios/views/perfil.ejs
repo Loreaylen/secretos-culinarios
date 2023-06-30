@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <%- include('./shared/head')%>
+  <body>
+    <%- include('./shared/header')%>
+    
+    <main>
+<h1>Mi perfil</h1>
+
+<section class="avatarUsuarioContainer">
+ <div class="avatarUsuario">
+    <img src="<%- sesion.avatar || '/images/fotoEnBlanco.png' %>" alt="Avatar usuario">
+  </div> 
+
+</section>
+
+<% if (typeof success !== 'undefined') { %>
+  <div class="containerMensaje">
+    <% if (success) { %>
+      <span class="success">El perfil se actualizó correctamente</span>
+    <% } else { %>
+      <span class="error">Hubo un error al actualizar el perfil</span>
+    <% } %>
+  </div>
+<% } %>
+
+      <form  method="post" novalidate>
+        <label for="nombre">Nombre:</label>
+        <input class='inputEditable' type="text" name="nombre" value="<%-sesion.nombre%>" placeholder="<%-sesion.nombre%>" disabled> 
+ 
+
+        <label for="usuario">Nombre de usuario</label>
+        <input class='inputEditable' type="text" name="usuario" value="<%-sesion.usuario%>" placeholder="<%-sesion.usuario%>" disabled>
+
+
+      <label for="mail">Email</label>
+      <input type="text" name="mail" value="<%-sesion.mail%>" placeholder="<%-sesion.mail%>" disabled> 
+
+        <input type="button" value="Cambiar contraseña">
+        <input type="button" class="botonEditar" value="Editar">
+        <input type="submit" class="botonGuardarCambios invisible" value="Guardar" >
+
+      </form>
+      
+        <button class="botonEliminar">Eliminar cuenta</button> 
+        
+    </main>
+    <%- include('./shared/footer')%>
+
+    <section class="modal invisible">
+      <div class="modalContainer">
+        <h2>¿Seguro que quieres eliminar tu cuenta?</h2>
+        <p>Esta acción es irreversible</p>
+        <div class="modalBotonesContainer">
+          <button class="botonConfirmarEliminar">Confirmar</button>
+          <button class="botonCancelarEliminar">Cancelar</button>
+        </div>
+       
+      </div>
+    </section>
+
+    <%- include('./shared/scripts')%>
+    <script src="/javascripts/editarPerfilUsuario.js"></script>
+  </body>
+</html>

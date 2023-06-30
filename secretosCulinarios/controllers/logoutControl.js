@@ -7,8 +7,6 @@ const logoutControl = {
       }
       res.redirect('/login')
     })
-
-    console.log('LA SESION ACTUAL:', req.session)
   }
 }
 

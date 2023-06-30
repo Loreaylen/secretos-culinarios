@@ -4,11 +4,18 @@ const Usuario = require('../models/Usuario')
 
 const loginControl = {
   'mostrarLogin': function(req,res){
+    if(req.session.user){
+      res.redirect('/')
+      return
+    }
     res.render('login', {nombrePag: 'Iniciar sesión', sesion: req.session.user || false})
   },
   'iniciarSesion': async function(req,res){
     try {
-      const [results, metadata] = await sequelize.query(`CALL login_usuario('${req.body.emailUsuario}')`)
+      const [results, metadata] = await sequelize.query(`CALL comprobar_mail('${req.body.emailUsuario}')`)
+      if(results.fallo){
+        throw Error('El usuario no existe')
+      }
       if(bcrypt.compareSync(req.body.contraseñaUsuario, results.contraseña)){
        const usuario = await Usuario.findOne({where: {mail: req.body.emailUsuario}})
        const usuarioInfo = usuario.dataValues
@@ -25,7 +32,7 @@ const loginControl = {
       else throw Error('Password incorrecto')
     }
     catch (err){
-      console.log(err)
+      res.render('errorPersonalizado', { nombrePag: 'Error de login', sesion: req.session.user || false, status:404, message: err })
     }
   }
 }
