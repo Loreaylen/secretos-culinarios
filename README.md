@@ -1,4 +1,4 @@
-# Secretos culinarios
+# Secretos culinarios :stew:
 Este proyecto simula un blog de recetas en el que un usuario se puede registrar y cargar recetas propias o guardarlas en favoritos. El usuario no registrado también puede visualizar todas las recetas.
 
 ## Tecnologías 
