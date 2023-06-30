@@ -42,10 +42,23 @@
 
       </form>
       
-        <input type="button" value="Eliminar cuenta"> 
+        <input type="button" class="botonEliminar" value="Eliminar cuenta"> 
         
     </main>
     <%- include('./shared/footer')%>
+
+    <section class="modal invisible">
+      <div class="modalContainer">
+        <h2>¿Seguro que quieres eliminar tu cuenta?</h2>
+        <p>Esta acción es irreversible</p>
+        <div class="modalBotonesContainer">
+          <button class="botonConfirmarEliminar">Confirmar</button>
+          <button class="botonCancelarEliminar">Cancelar</button>
+        </div>
+       
+      </div>
+    </section>
+
     <%- include('./shared/scripts')%>
     <script src="/javascripts/editarPerfilUsuario.js"></script>
   </body>

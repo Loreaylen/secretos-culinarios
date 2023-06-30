@@ -1,5 +1,7 @@
 body {
-  padding: 50px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -30,6 +32,41 @@ height: auto;
   width: 100%;
   height: auto;
 }
+
+.modal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top:0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContainer {
+  width: 320px;
+  height: 200px;
+  background-color: #fff;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalContainer > * {
+  width: 100%;
+  text-align: center;
+}
+
+.modalBotonesContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
 
 .invisible {
   display: none;

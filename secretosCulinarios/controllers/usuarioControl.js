@@ -47,6 +47,16 @@ const usuarioControl = {
     catch (err){
       res.redirect('/usuario/perfil?success=false')
     }
+  },
+  'eliminarCuenta': async function(req, res){
+    try{
+      const [respuesta, metadata] = await sequelize.query(`DELETE FROM usuarios WHERE id = ${req.session.user.id}`)
+      res.redirect('/')
+      return respuesta
+    }
+    catch (err){
+      console.log('no se pudo eliminar el usuario, ', err)
+    }
   }
 }
 

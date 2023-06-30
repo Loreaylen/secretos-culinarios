@@ -12,7 +12,10 @@ const loginControl = {
   },
   'iniciarSesion': async function(req,res){
     try {
-      const [results, metadata] = await sequelize.query(`CALL login_usuario('${req.body.emailUsuario}')`)
+      const [results, metadata] = await sequelize.query(`CALL comprobar_mail('${req.body.emailUsuario}')`)
+      if(results.fallo){
+        throw Error('El usuario no existe')
+      }
       if(bcrypt.compareSync(req.body.contraseñaUsuario, results.contraseña)){
        const usuario = await Usuario.findOne({where: {mail: req.body.emailUsuario}})
        const usuarioInfo = usuario.dataValues

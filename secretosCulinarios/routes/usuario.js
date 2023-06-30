@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { cargarPagUsuario, editarPerfil } = require('../controllers/usuarioControl')
+const { cargarPagUsuario, editarPerfil, eliminarCuenta } = require('../controllers/usuarioControl')
 
 
 router.get('/', function(req,res){
@@ -9,5 +9,6 @@ router.get('/', function(req,res){
 router.get('/:dir', cargarPagUsuario )
 
 router.post('/perfil/editar', editarPerfil )
+router.post('/perfil/eliminar', eliminarCuenta )
 
 module.exports = router;

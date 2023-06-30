@@ -28,12 +28,20 @@ VALUES
 
 -- CREAR PROCEDIMIENTO QUE COMPRUEBE SI EL MAIL EXISTE, SI EXISTE QUE DEVUELVA ERROR, SINO, QUE LO INSERTE EN LA TABLA
 DELIMITER $$
-CREATE PROCEDURE `comprobar_mail`(IN usermail VARCHAR(200), OUT response BOOLEAN )
+CREATE PROCEDURE `comprobar_mail`(IN usermail VARCHAR(200))
 BEGIN
-
+IF EXISTS(SELECT mail FROM usuarios WHERE mail = usermail)
+ THEN
+  CALL login_usuario(usermail);
+ELSE 
+ SELECT 1 AS fallo;
+END IF;
 END $$
 
+CALL comprobar_mail('lag@example.com');
+SELECT @res AS respuesta;
 
+DROP PROCEDURE comprobar_mail;
 -- CREAR PROCEDIMIENTO QUE ME TRAIGA EL MAIL Y LA CONTRASEÑA
 -- Si el mail existe, que traiga los dos, sino, que traiga una cadena vacía
 DELIMITER //
@@ -49,8 +57,8 @@ END //
 DELIMITER ;
 
 -- Se le asigna el out a una variable que después se va a seleccionar normalmente
-CALL login_usuario('carlitaLaMejor@example.com'); 
-SELECT * FROM usuarios WHERE mail;
+CALL login_usuario('ana.rodriguez@example.com'); 
+SELECT * FROM usuarios;
 
 DELIMITER //
 CREATE PROCEDURE `actualizar_perfil`(IN idCuenta INT, IN nuevoNombre VARCHAR(100), IN nuevoUsuario VARCHAR(20))
