@@ -1,3 +1,4 @@
+CREATE DATABASE secretosCulinarios;
 USE secretosCulinarios;
 
 CREATE TABLE usuarios (
@@ -51,4 +52,15 @@ DELIMITER ;
 CALL login_usuario('carlitaLaMejor@example.com'); 
 SELECT * FROM usuarios WHERE mail;
 
-DROP PROCEDURE login_usuario;
+DELIMITER //
+CREATE PROCEDURE `actualizar_perfil`(IN idCuenta INT, IN nuevoNombre VARCHAR(100), IN nuevoUsuario VARCHAR(20))
+BEGIN
+UPDATE usuarios
+SET nombre = nuevoNombre, usuario = nuevoUsuario
+WHERE id = idCuenta;
+END //
+
+CALL actualizar_perfil(4, 'Kiwi', 'kiwisinoKiwisin')
+SELECT * FROM usuarios;
+DELIMITER ;
+DROP PROCEDURE comprobar_mail;
