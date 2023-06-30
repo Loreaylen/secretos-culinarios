@@ -30,7 +30,10 @@ var app = express();
 app.use(session({
   secret: 'asdjgesougbjnsdf123',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {
+    maxAge: null
+  }
 }))
 
 // view engine setup

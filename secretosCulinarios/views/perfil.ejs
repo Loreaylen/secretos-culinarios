@@ -7,34 +7,43 @@
     <main>
 <h1>Mi perfil</h1>
 
-<!-- <section class="avatarUsuarioContainer">
+<section class="avatarUsuarioContainer">
  <div class="avatarUsuario">
     <img src="<%- sesion.avatar || '/images/fotoEnBlanco.png' %>" alt="Avatar usuario">
   </div> 
 
 </section>
+
+<% if (typeof success !== 'undefined') { %>
+  <div class="container">
+    <% if (success) { %>
+      <span class="success">El perfil se actualizó correctamente</span>
+    <% } else { %>
+      <span class="error">Hubo un error al actualizar el perfil</span>
+    <% } %>
+  </div>
+<% } %>
+
       <form action="/perfil/editar" method="post" novalidate>
         <label for="nombre">Nombre:</label>
         <input class='inputEditable' type="text" name="nombre" value="<%-sesion.nombre%>" placeholder="<%-sesion.nombre%>" disabled> 
-        <input class='inputEditable' type="text" name="nombre" value="aaaaa" placeholder="aaaaa" disabled>
-        <input type="button" class="botonEditar" name="nombre" value="Editar">
+ 
 
         <label for="usuario">Nombre de usuario</label>
-         <input class='inputEditable' type="text" name="usuario" value="<%-sesion.usuario%>" placeholder="<%-sesion.usuario%>" disabled>
-        <input class='inputEditable' type="text" name="usuario" value="afasf" placeholder="asdadsa" disabled>
-        <input type="button" class="botonEditar" name="usuario" value="Editar">
+        <input class='inputEditable' type="text" name="usuario" value="<%-sesion.usuario%>" placeholder="<%-sesion.usuario%>" disabled>
 
-       <label for="mail">Email</label>
-        <input type="text" name="mail" value="<%-sesion.mail%>" placeholder="<%-sesion.mail%>" disabled> 
+
+      <label for="mail">Email</label>
+      <input type="text" name="mail" value="<%-sesion.mail%>" placeholder="<%-sesion.mail%>" disabled> 
 
         <input type="button" value="Cambiar contraseña">
-
+        <input type="button" class="botonEditar" value="Editar">
+        <input type="button" class="botonGuardarCambios invisible" value="Guardar" >
 
       </form>
       
-        <input type="button" value="Eliminar cuenta"> -->
-        <input class='inputEditable' type="text" name="usuario" value="afasf" placeholder="asdadsa" disabled>
-        <input type="button" class="botonEditar" name="usuario" value="Editar">
+        <input type="button" value="Eliminar cuenta"> 
+        
     </main>
     <%- include('./shared/footer')%>
     <%- include('./shared/scripts')%>
