@@ -66,7 +66,11 @@ BEGIN
 UPDATE usuarios
 SET nombre = nuevoNombre, usuario = nuevoUsuario
 WHERE id = idCuenta;
+SELECT nombre AS nombre, usuario AS usuario FROM usuarios WHERE id = idCuenta ;
 END //
+DROP PROCEDURE actualizar_perfil;
+
+
 
 CALL actualizar_perfil(4, 'Kiwi', 'kiwisinoKiwisin')
 SELECT * FROM usuarios;

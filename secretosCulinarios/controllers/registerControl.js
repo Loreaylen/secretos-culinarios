@@ -8,10 +8,12 @@ const registerControl = {
       res.redirect('/')
       return
     }
-    res.render('register', { nombrePag: 'Registro', resultadosVal: [], sesion: req.session.user })
+    
+   res.render('register', { nombrePag: 'Registro', resultadosVal: [], sesion: req.session.user })
   },
   'submit': async function (req, res) {
     try {
+      
       const usuarioRegistrado = await Usuario.create({
         nombre: req.body.nombre,
         mail: req.body.email,

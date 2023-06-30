@@ -12,7 +12,7 @@ const editarInput = () => {
   botonGuardar.removeClass("invisible");
 };
 
-const guardarCambios = async () => {
+const guardarCambios =  () => {
   const guardar = {};
   for (let input of inputEditable) {
     guardar[$(input).attr("name")] = $(input).val();
@@ -21,11 +21,9 @@ const guardarCambios = async () => {
   botonGuardar.addClass("invisible");
   botonEditar.removeClass("invisible");
   $(inputEditable).attr("disabled");
-  for (let input of inputEditable) {
-    $(input).attr("disabled");
-  }
+ 
 
-  await fetch("/usuario/perfil/editar", {
+   fetch("/usuario/perfil", {
     method: "POST",
     headers: {
       Accept: "application.json",
@@ -36,6 +34,9 @@ const guardarCambios = async () => {
   })
     .then((res) => {
       console.log(res);
+      for (let input of inputEditable) {
+        $(input).attr("disabled", true);
+      }
     })
     .catch((err) => console.log("hubo un error: ", err));
 };
@@ -48,8 +49,8 @@ const cancelarEliminacion = () => {
   $(modal).addClass('invisible')
 }
 
-const eliminarCuenta = async () => {
-await  fetch("/usuario/perfil/eliminar", {
+const eliminarCuenta =  () => {
+  fetch("/usuario/perfil/eliminar", {
   method: "POST"
 })
 .then((res) => {

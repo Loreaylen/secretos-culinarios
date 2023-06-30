@@ -11,7 +11,7 @@ const resultadosVal = validationResult(req).array()
 console.log('FORM', req.body)
 if(resultadosVal.length > 0){
   console.log(resultadosVal)
-  res.render('register', {nombrePag: 'Registro', resultadosVal: resultadosVal})
+  res.render('register', {nombrePag: 'Registro', sesion: req.session.user || false, resultadosVal: resultadosVal})
   return
 }
 submit(req, res)

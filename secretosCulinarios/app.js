@@ -29,7 +29,7 @@ var app = express();
 //Configurar sesión
 app.use(session({
   secret: 'asdjgesougbjnsdf123',
-  resave: false,
+  resave: true,
   saveUninitialized: false,
   cookie: {
     maxAge: null

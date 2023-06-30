@@ -32,7 +32,7 @@ const loginControl = {
       else throw Error('Password incorrecto')
     }
     catch (err){
-      console.log(err)
+      res.render('errorPersonalizado', { nombrePag: 'Error de login', sesion: req.session.user || false, status:404, message: err })
     }
   }
 }

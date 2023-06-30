@@ -33,20 +33,19 @@ const usuarioControl = {
       res.render('errorPersonalizado', { nombrePag: 'Error 401', message: 'No estás autorizado. Fuera bicho.', status: '401' })
       return
     }
-    res.render(irA.vista, { nombrePag: irA.nombrePag, sesion: req.session.user, success: irA.vista === 'perfil' ? irA.success : undefined })
+    res.render(irA.vista, { nombrePag: irA.nombrePag, sesion: req.session.user, success: irA.vista === 'perfil' ? irA.success : undefined, message: irA.vista === 'errorPersonalizado' ? irA.message : null, status: irA.vista === 'errorPersonalizado' ? irA.status : '200' })
   },
   'editarPerfil': async function (req, res) {
-    const guardar = req.body
+   
+    const datosBody = req.body
+    const sessionUser = req.session.user
     const id = req.session.user.id
-    
-    try {
-      const [respuesta, metadata] = await sequelize.query(`CALL actualizar_perfil(${id}, '${guardar.nombre}', '${guardar.usuario}')`)
-      console.log(respuesta)
-      res.redirect('/usuario/perfil?success=true')
-    }
-    catch (err){
-      res.redirect('/usuario/perfil?success=false')
-    }
+    const [data, metadat] = await sequelize.query(`CALL actualizar_perfil(${id}, '${datosBody.nombre}', '${datosBody.usuario}')`)
+      sessionUser.nombre = data.nombre;
+      sessionUser.usuario = data.usuario;
+    res.render('perfil', {nombrePag: 'Mi perfil', sesion: req.session.user, success: true})
+     
+   
   },
   'eliminarCuenta': async function(req, res){
     try{

@@ -24,7 +24,7 @@
   </div>
 <% } %>
 
-      <form action="/perfil/editar" method="post" novalidate>
+      <form  method="post" novalidate>
         <label for="nombre">Nombre:</label>
         <input class='inputEditable' type="text" name="nombre" value="<%-sesion.nombre%>" placeholder="<%-sesion.nombre%>" disabled> 
  
@@ -38,7 +38,7 @@
 
         <input type="button" value="Cambiar contraseña">
         <input type="button" class="botonEditar" value="Editar">
-        <input type="button" class="botonGuardarCambios invisible" value="Guardar" >
+        <input type="submit" class="botonGuardarCambios invisible" value="Guardar" >
 
       </form>
       
