@@ -71,3 +71,6 @@ nodemon bin/www
 > **Nota:** Cambié el script para npm start para que ejecute el comando de nodemon. Por defecto estaba como `nodemon app.js`
 
 En el navegador, dirigirse a `http://localhost:3000/` para ver el proyecto.
+
+## Consideraciones generales
+⚠️ **No intentar iniciar sesión con los usuarios que se insertaron desde workbench**, los hash provistos fueron generados aleatoriamente.
