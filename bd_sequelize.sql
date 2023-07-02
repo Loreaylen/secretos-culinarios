@@ -24,8 +24,8 @@ createdAt DATE,
 updatedAt DATE
 );
 
--- Tabla usuario_recetas
-CREATE TABLE usuario_recetas(
+-- Tabla usuarios_recetas
+CREATE TABLE usuarios_recetas(
 id_tabla INT PRIMARY KEY AUTO_INCREMENT,
 id_usuario INT NOT NULL,
 id_receta INT NOT NULL,
@@ -46,7 +46,6 @@ id_receta INT NOT NULL,
 id_categoria INT NOT NULL
 );
 
-
 /*-------------------------- DATOS  ------------------------------*/
 
 -- Usuarios de prueba (NO UTILIZAR PARA INICIAR SESIÓN, HASH GENERADO ALEATORIAMENTE)
@@ -65,6 +64,84 @@ VALUES ('Entrantes y Aperitivos'), ('Platos Principales'), ('Guarniciones y Ensa
 ('Comida Saludable'), ('Comida Tradicional'), ('Comida Internacional'), ('Platos a la Parrilla'), ('Comida para Niños');
 
 SELECT * FROM categorias;
+
+-- Recetas 
+INSERT INTO recetas (titulo, url_imagen, pasos, createdAt, updatedAt)
+VALUES
+('Crema de calabaza', NULL,
+'Ingredientes 
+1 cucharada de aceite de oliva virgen extra, opcional
+4 dientes de ajo, troceados
+1 cebolla, troceada
+1 kilo de calabaza, 2 libras, pelada y troceada
+2 tazas de caldo de verduras, 500 ml
+1 taza de leche de coco de lata, 250 ml, puedes usar cualquier tipo de leche vegetal
+½ cucharadita de sal
+¼ cucharadita de pimienta negra molida
+
+Instrucciones
+1.Calienta el aceite en una olla y echa el ajo y la cebolla. Cocina a fuego medio-alto hasta que empiecen a dorarse.
+2.Echa la calabaza y cocina durante unos 2-3 minutos, removiendo de vez en cuando.
+3.Añade el resto de ingredientes y cuando rompa a hervir cocina fuego medio-alto durante unos 15 minutos o hasta que la calabaza esté tierna.
+4.Bate con una batidora de vaso o una batidora de mano.
+5.Sirve inmediatamente. A mí me gusta servirla con perejil fresco picado, leche de coco, semillas de calabaza tostadas y pimienta negra, además de acompañarla con seitán, tempeh o bacon de tempeh troceado por encima.
+6.Guarda las sobras en la nevera en un recipiente hermético durante 5-7 días o en el congelador por unos 3 meses. Te recomiendo que la congeles en porciones individuales. Para descongelar, déjala en la nevera un día antes de comerla y recaliéntala en el microondas o en un cazo a fuego medio.',
+CURDATE(), 
+CURDATE()),
+( 'Mousse de chocolate', NULL,
+'Ingredientes
+Agua 50 c.c.
+Azúcar 140 Gramos
+Chocolate semiamargo o amargo 200 Gramos
+Claras 3 Unidades
+Crema doble 200 Gramos
+Mantequilla 100 Gramos
+
+Preparación
+Fundir el chocolate y la mantequilla a baño María, integrar y retirar del calor.
+Calentar la crema sin llegar a hervor y unir al chocolate. Hacer un  almíbar con el azúcar y el agua hasta 120° C.
+Batir las claras e ir agregando el almíbar en forma de hilo sin dejar de batir hasta que llegue a temperatura ambiente.
+Incorporar la mezcla de chocolate con espátula en movimientos envolventes.
+Llevar a frío.
+Servir con frutillas fileteadas, arándanos y menta.',
+CURDATE(), 
+CURDATE()),
+('Pan de ajo', NULL,
+'Ingredientes
+Para 25 unidades
+1 Pan baguette o barra rústica de miga firme y buena corteza
+65 g Mantequilla sin sal atemperada
+30 ml Aceite de oliva virgen extra
+1 g Ralladura de limón
+4 g Ajo granulado
+3 Diente de ajo
+Pimienta negra molida
+Queso Parmesano opcional
+Sal gruesa o en escamas
+Perejil fresco
+
+Cómo hacerlo:
+
+Precalentar el horno a 180ºC y preparar una bandeja cubriéndola con papel sulfurizado. Procurar que la mantequilla esté a temperatura ambiente, con una textura blanda. Lavar y secar bien el limón. Pelar los dientes de ajo y picarlos muy finos. Cortar la barra de pan en rebanadas de aproximadamente un dedo de grosor.
+
+Disponer la mantequilla ablandada en un cuenco y añadir el aceite de oliva, la ralladura de limón, los dientes de ajo picados, un golpe de pimienta negra, el ajo granulado, una pizca de sal gruesa y una cucharada de queso parmesano, si lo usamos. Mezclar todo muy bien hasta dejar una textura cremosa.
+
+Untar cada rebanada de pan con la pasta cremosa usando un pincel de cocina, o un cuchillo de mantequilla. Distribuirlas sobre la bandeja preparada y hornear durante unos 12-15 minutos, hasta que se haya derretido la mantequilla y el pan esté bien dorado. Picar perejil y añadirlo antes de servir.',
+CURDATE(), 
+CURDATE())
+
+SELECT * FROM recetas;
+
+SELECT * FROM usuarios; -- 2, 4, 5 -- crema de calabaza 1 (1,2,4,11,12,16 ),  mousse de chocolate 2 (5,12,17), pan de ajo 3 (1,3,17)
+
+-- Categorías para cada receta
+INSERT INTO categorias_recetas (id_receta, id_categoria)
+VALUES (1, 1), (1, 2), (1, 4), (1, 11), (1, 12), (1, 16),
+(2, 5), (2, 12), (2, 17), (3, 1), (3, 3), (3, 17);
+
+-- Usuarios que crearon las recetas
+INSERT INTO usuarios_recetas (id_usuario, id_receta)
+VALUES (2, 1), (4, 2), (5, 3);
 /*-------------------------- PROCEDIMIENTOS ALMACENADOS  ------------------------------*/
 
 -- CREAR PROCEDIMIENTO QUE COMPRUEBE SI EL MAIL EXISTE, SI EXISTE QUE DEVUELVA ERROR
@@ -118,3 +195,30 @@ END //
 
 SELECT * FROM usuarios;
 DELIMITER ;
+
+DELIMITER //
+-- SELECCIONAR TODAS LAS RECETAS, traer nombre de usuario, nombre de receta, pasos, fecha de creación
+CREATE PROCEDURE `traer_recetas`(IN id_usuario INT)
+BEGIN
+IF id_usuario IS NOT NULL
+THEN
+SELECT u.usuario, u.url_avatar, r.titulo , r.url_imagen, r.pasos, r.createdAt
+FROM usuarios_recetas ur
+LEFT JOIN usuarios u
+ON ur.id_usuario = u.id
+LEFT JOIN recetas AS r
+ON ur.id_receta = r.id
+WHERE u.id = id_usuario
+ORDER BY ur.id_tabla;
+ELSE 
+SELECT u.usuario, u.url_avatar, r.titulo , r.url_imagen, r.pasos, r.createdAt
+FROM usuarios_recetas ur
+LEFT JOIN usuarios u
+ON ur.id_usuario = u.id
+LEFT JOIN recetas AS r
+ON ur.id_receta = r.id
+ORDER BY ur.id_tabla;
+END IF;
+END //
+
+select * from recetas;
