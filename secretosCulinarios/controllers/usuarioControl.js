@@ -18,10 +18,6 @@ const usuarioControl = {
         nombrePag: 'Mi perfil',
         success: req.query.success
       },
-      recetas: {
-        vista: 'recetasUsuario',
-        nombrePag: 'Mis recetas'
-      },
       favoritos: {
         vista: 'favoritos',
         nombrePag: 'Mis favoritos'
@@ -75,6 +71,33 @@ const usuarioControl = {
     catch (err){
       console.log('no se pudo eliminar el usuario, ', err)
     }
+  },
+  'cargarRecetasUsuario': async function(req,res){
+    // const idUser = req.session.user.id
+    // const data = await sequelize.query(`CALL traer_recetas(NULL)`, {
+    //   nest: true
+    // })
+    // const listaRecetas = Object.values(data)
+    // const dataCategorias = await sequelize.query(`CALL categorias_por_receta(1)`, {
+    //   nest: true
+    // })
+    // console.log(dataCategorias)
+    const datos = await sequelize.query(`SELECT u.usuario, u.url_avatar, r.titulo , r.url_imagen, r.pasos, r.createdAt, c.nombre AS categoria
+    FROM usuarios_recetas ur
+    LEFT JOIN usuarios u
+    ON ur.id_usuario = u.id
+    LEFT JOIN recetas AS r
+    ON ur.id_receta = r.id
+    LEFT JOIN categorias_recetas cr
+    ON cr.id_receta = r.id
+    LEFT JOIN categorias c
+    ON c.id_categoria = cr.id_categoria
+    ORDER BY ur.id_tabla;`, {
+      fieldMap: {
+        categoria: categoria
+      }
+    })
+    console.log(datos)
   }
 }
 
