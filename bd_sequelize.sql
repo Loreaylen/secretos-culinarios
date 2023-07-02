@@ -196,8 +196,8 @@ END //
 SELECT * FROM usuarios;
 DELIMITER ;
 
+-- Procedimiento para traer todas las recetas o las recetas por usuario
 DELIMITER //
--- SELECCIONAR TODAS LAS RECETAS, traer nombre de usuario, nombre de receta, pasos, fecha de creación
 CREATE PROCEDURE `traer_recetas`(IN id_usuario INT)
 BEGIN
 IF id_usuario IS NOT NULL
@@ -221,4 +221,27 @@ ORDER BY ur.id_tabla;
 END IF;
 END //
 
-select * from recetas;
+DELIMITER //
+CALL traer_recetas(NULL);
+
+DELIMITER //
+CREATE PROCEDURE `categorias_por_receta`(IN idReceta INT)
+BEGIN
+SELECT c.nombre 
+FROM categorias_recetas cr
+LEFT JOIN categorias c
+ON cr.id_categoria = c.id_categoria
+WHERE id_receta = idReceta;
+END //
+
+SELECT u.usuario, u.url_avatar, r.titulo , r.url_imagen, r.pasos, r.createdAt, c.nombre AS categoria
+FROM usuarios_recetas ur
+LEFT JOIN usuarios u
+ON ur.id_usuario = u.id
+LEFT JOIN recetas AS r
+ON ur.id_receta = r.id
+LEFT JOIN categorias_recetas cr
+ON cr.id_receta = r.id
+LEFT JOIN categorias c
+ON c.id_categoria = cr.id_categoria
+ORDER BY ur.id_tabla;
