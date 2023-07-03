@@ -212,7 +212,7 @@ END IF;
 END //
 
 DELIMITER //
-CALL traer_recetas(2);
+CALL traer_recetas(NULL);
 
 DELIMITER //
 CREATE PROCEDURE `categorias_por_receta`(IN idReceta INT)
@@ -224,14 +224,18 @@ ON cr.id_categoria = c.id_categoria
 WHERE id_receta = idReceta;
 END //
 
-SELECT u.usuario, u.url_avatar, r.titulo , r.url_imagen, r.pasos, r.createdAt, c.nombre AS categoria
-FROM usuarios_recetas ur
-LEFT JOIN usuarios u
-ON ur.id_usuario = u.id
-LEFT JOIN recetas AS r
-ON ur.id_receta = r.id
-LEFT JOIN categorias_recetas cr
-ON cr.id_receta = r.id
+SELECT u.usuario, u.url_avatar, r.titulo, r.url_imagen,  r.pasos, r.createdAt, c.nombre
+FROM categorias_recetas cr
 LEFT JOIN categorias c
-ON c.id_categoria = cr.id_categoria
-ORDER BY ur.id_tabla;
+ON cr.id_categoria = c.id_categoria
+LEFT JOIN recetas r
+ON cr.id_receta = r.id
+LEFT JOIN usuarios u
+ON u.id = r.id_usuario;
+
+SELECT u.usuario, u.url_avatar, r.titulo, r.url_imagen, r.pasos, r.createdAt, GROUP_CONCAT(c.nombre) AS categorias
+FROM categorias_recetas cr
+LEFT JOIN categorias c ON cr.id_categoria = c.id_categoria
+LEFT JOIN recetas r ON cr.id_receta = r.id
+LEFT JOIN usuarios u ON u.id = r.id_usuario
+GROUP BY r.id;

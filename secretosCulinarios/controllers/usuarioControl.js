@@ -1,36 +1,14 @@
 const bcrypt = require('bcrypt')
 const sequelize = require('../database/connect.js')
-const {cerrarSesion} = require('./logoutControl')
+const Receta = require('../models/ManyToMany/Receta.js')
+const Categoria = require('../models/ManyToMany/Categoria.js')
 
 const usuarioControl = {
-  'cargarPagUsuario': function (req, res) {
-    const dir = req.params.dir
-
-    const rutaPorDefecto = {
-      vista: 'errorPersonalizado',
-      nombrePag: 'Error 404',
-      message: 'No se encontró la página solicitada',
-      status: '404'
-    }
-    const subdirectorios = {
-      perfil: {
-        vista: 'perfil',
-        nombrePag: 'Mi perfil',
-        success: req.query.success
-      },
-      favoritos: {
-        vista: 'favoritos',
-        nombrePag: 'Mis favoritos'
-      }
-    }
-    console.log(dir)
-    const irA = subdirectorios[dir] || rutaPorDefecto
-
-    if (!req.session.user) {
-      res.render('errorPersonalizado', { nombrePag: 'Error 401', message: 'No estás autorizado. Fuera bicho.', status: '401' })
-      return
-    }
-    res.render(irA.vista, { nombrePag: irA.nombrePag, sesion: req.session.user, success: irA.vista === 'perfil' ? irA.success : undefined, message: irA.vista === 'errorPersonalizado' ? irA.message : null, status: irA.vista === 'errorPersonalizado' ? irA.status : '200' })
+  'cargarError': function(req, res){
+    res.render('errorPersonalizado', {nombrePag: Error, status: '404', message: 'No se encontró la página solicitada'})
+  },
+  'cargarPerfil': function(req,res){
+    res.render('perfil', {nombrePag: 'Mi perfil', sesion: req.session.user, success: req.query.success})
   },
   'editarPerfil': async function (req, res) {
    
@@ -73,31 +51,18 @@ const usuarioControl = {
     }
   },
   'cargarRecetasUsuario': async function(req,res){
-    // const idUser = req.session.user.id
-    // const data = await sequelize.query(`CALL traer_recetas(NULL)`, {
-    //   nest: true
-    // })
-    // const listaRecetas = Object.values(data)
-    // const dataCategorias = await sequelize.query(`CALL categorias_por_receta(1)`, {
-    //   nest: true
-    // })
-    // console.log(dataCategorias)
-    const datos = await sequelize.query(`SELECT u.usuario, u.url_avatar, r.titulo , r.url_imagen, r.pasos, r.createdAt, c.nombre AS categoria
-    FROM usuarios_recetas ur
-    LEFT JOIN usuarios u
-    ON ur.id_usuario = u.id
-    LEFT JOIN recetas AS r
-    ON ur.id_receta = r.id
-    LEFT JOIN categorias_recetas cr
-    ON cr.id_receta = r.id
-    LEFT JOIN categorias c
-    ON c.id_categoria = cr.id_categoria
-    ORDER BY ur.id_tabla;`, {
-      fieldMap: {
-        categoria: categoria
-      }
+    const idUser = req.session.user.id
+    const data = await sequelize.query(`SELECT u.usuario, u.url_avatar, r.titulo, r.url_imagen, r.pasos, r.createdAt, GROUP_CONCAT(c.nombre) AS categorias
+    FROM categorias_recetas cr
+    LEFT JOIN categorias c ON cr.id_categoria = c.id_categoria
+    LEFT JOIN recetas r ON cr.id_receta = r.id
+    LEFT JOIN usuarios u ON u.id = r.id_usuario
+    GROUP BY r.id;`, {
+      nest: true
     })
-    console.log(datos)
+    console.log(data)
+   
+  
   }
 }
 

@@ -1,5 +1,6 @@
 const { DataTypes}   = require('sequelize')
 const  sequelize  = require('../../database/connect.js')
+const Receta = require('../ManyToMany/Receta')
 
 const Usuario = sequelize.define('Usuario', {
   id: {

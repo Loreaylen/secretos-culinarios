@@ -1,5 +1,7 @@
-const { DataTypes } = require('sequelize')
+const { DataTypes, Model } = require('sequelize')
 const sequelize = require('../../database/connect.js')
+const Categoria = require('./Categoria')
+const CategoriaReceta = require('./CategoriaReceta')
 
 const Receta = sequelize.define('Receta', {
   id: {
@@ -28,5 +30,11 @@ const Receta = sequelize.define('Receta', {
   sequelize,
   tableName: 'recetas'
 })
+
+// Receta.belongsToMany(Categoria,{
+//   through: CategoriaReceta,
+//   foreignKey: 'id_receta',
+//   otherKey:'id_categoria'
+// })
 
 module.exports = Receta;
