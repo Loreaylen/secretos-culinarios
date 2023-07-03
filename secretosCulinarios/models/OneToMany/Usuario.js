@@ -1,5 +1,5 @@
 const { DataTypes}   = require('sequelize')
-const  sequelize  = require('../database/connect.js')
+const  sequelize  = require('../../database/connect.js')
 
 const Usuario = sequelize.define('Usuario', {
   id: {
@@ -31,6 +31,10 @@ const Usuario = sequelize.define('Usuario', {
 {
   sequelize,
   tableName:'usuarios'
+})
+
+Usuario.hasMany(Receta, {
+  foreignKey: 'id_usuario'
 })
 
 module.exports = Usuario;

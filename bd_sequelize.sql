@@ -20,17 +20,10 @@ id INT PRIMARY KEY AUTO_INCREMENT,
 titulo VARCHAR(150) NOT NULL,
 url_imagen VARCHAR(500) DEFAULT NULL,
 pasos TEXT NOT NULL,
-createdAt DATE,
-updatedAt DATE
-);
-
--- Tabla usuarios_recetas
-CREATE TABLE usuarios_recetas(
-id_tabla INT PRIMARY KEY AUTO_INCREMENT,
 id_usuario INT NOT NULL,
-id_receta INT NOT NULL,
-CONSTRAINT pk_idUsuario FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
-CONSTRAINT pk_idReceta FOREIGN KEY (id_receta) REFERENCES recetas(id)
+createdAt DATE,
+updatedAt DATE,
+CONSTRAINT pk_creador FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 );
 
 -- Tabla categorías
@@ -51,7 +44,7 @@ id_categoria INT NOT NULL
 -- Usuarios de prueba (NO UTILIZAR PARA INICIAR SESIÓN, HASH GENERADO ALEATORIAMENTE)
 INSERT INTO usuarios (nombre, mail, usuario, contraseña, url_avatar, createdAt, updatedAt)
 VALUES
-('Juan Pérez', 'juan.perez@example.com', 'jperez', '$2a$10$N1WUMpEeAMH3afLxnmK6OuqXh19zQJFA8p2olue7s9XoVlSMvlBMu', NULL, CURDATE(), CURDATE()),
+('Juan Pérez', 'juancito.perez@example.com', 'jperez', '$2a$10$N1WUMpEeAMH3afLxxxK6OuqXh19zQJFA8p2olue7s9XoVlSMvlBMu', NULL, CURDATE(), CURDATE()),
 ('María López', 'maria.lopez@example.com', 'mlopez', '$2a$10$1bQmCAzK8zOcr0hOT.vh3ORdD6AeI8MclJ0epo6gajdEp1h2bjS.C', NULL, CURDATE(), CURDATE()),
 ('Pedro Gómez', 'pedro.gomez@example.com', 'pgomez', '$2a$10$7eMjtLpqYgkwwbRhkIjB2OtUfU6YfAwFyyltnftkKYzXMyXfrK1RC', NULL, CURDATE(), CURDATE()),
 ('Ana Rodríguez', 'ana.rodriguez@example.com', 'arodriguez', '$2a$10$Dpwe5oybBvSpv0PZS4lvm.VLbj02sudom25c64XK1ng/3h8CI9Zl2', NULL, CURDATE(), CURDATE()),
@@ -63,10 +56,10 @@ VALUES ('Entrantes y Aperitivos'), ('Platos Principales'), ('Guarniciones y Ensa
 ('Meriendas y Snacks'), ('Panes y Masas'), ('Apto para Celíacos'), ('Vegano y Vegetariano'), ('Sin Gluten'), ('Sin Lácteos'), ('Sin Azúcar'), ('Comida Rápida'),
 ('Comida Saludable'), ('Comida Tradicional'), ('Comida Internacional'), ('Platos a la Parrilla'), ('Comida para Niños');
 
-SELECT * FROM categorias;
+SELECT * FROM usuarios;
 
 -- Recetas 
-INSERT INTO recetas (titulo, url_imagen, pasos, createdAt, updatedAt)
+INSERT INTO recetas (titulo, url_imagen, pasos, id_usuario, createdAt, updatedAt)
 VALUES
 ('Crema de calabaza', NULL,
 'Ingredientes 
@@ -86,6 +79,7 @@ Instrucciones
 4.Bate con una batidora de vaso o una batidora de mano.
 5.Sirve inmediatamente. A mí me gusta servirla con perejil fresco picado, leche de coco, semillas de calabaza tostadas y pimienta negra, además de acompañarla con seitán, tempeh o bacon de tempeh troceado por encima.
 6.Guarda las sobras en la nevera en un recipiente hermético durante 5-7 días o en el congelador por unos 3 meses. Te recomiendo que la congeles en porciones individuales. Para descongelar, déjala en la nevera un día antes de comerla y recaliéntala en el microondas o en un cazo a fuego medio.',
+2,
 CURDATE(), 
 CURDATE()),
 ( 'Mousse de chocolate', NULL,
@@ -104,6 +98,7 @@ Batir las claras e ir agregando el almíbar en forma de hilo sin dejar de batir 
 Incorporar la mezcla de chocolate con espátula en movimientos envolventes.
 Llevar a frío.
 Servir con frutillas fileteadas, arándanos y menta.',
+3,
 CURDATE(), 
 CURDATE()),
 ('Pan de ajo', NULL,
@@ -127,21 +122,19 @@ Precalentar el horno a 180ºC y preparar una bandeja cubriéndola con papel sulf
 Disponer la mantequilla ablandada en un cuenco y añadir el aceite de oliva, la ralladura de limón, los dientes de ajo picados, un golpe de pimienta negra, el ajo granulado, una pizca de sal gruesa y una cucharada de queso parmesano, si lo usamos. Mezclar todo muy bien hasta dejar una textura cremosa.
 
 Untar cada rebanada de pan con la pasta cremosa usando un pincel de cocina, o un cuchillo de mantequilla. Distribuirlas sobre la bandeja preparada y hornear durante unos 12-15 minutos, hasta que se haya derretido la mantequilla y el pan esté bien dorado. Picar perejil y añadirlo antes de servir.',
+4,
 CURDATE(), 
 CURDATE())
 
 SELECT * FROM recetas;
 
-SELECT * FROM usuarios; -- 2, 4, 5 -- crema de calabaza 1 (1,2,4,11,12,16 ),  mousse de chocolate 2 (5,12,17), pan de ajo 3 (1,3,17)
+SELECT * FROM usuarios; 
 
 -- Categorías para cada receta
 INSERT INTO categorias_recetas (id_receta, id_categoria)
 VALUES (1, 1), (1, 2), (1, 4), (1, 11), (1, 12), (1, 16),
 (2, 5), (2, 12), (2, 17), (3, 1), (3, 3), (3, 17);
 
--- Usuarios que crearon las recetas
-INSERT INTO usuarios_recetas (id_usuario, id_receta)
-VALUES (2, 1), (4, 2), (5, 3);
 /*-------------------------- PROCEDIMIENTOS ALMACENADOS  ------------------------------*/
 
 -- CREAR PROCEDIMIENTO QUE COMPRUEBE SI EL MAIL EXISTE, SI EXISTE QUE DEVUELVA ERROR
@@ -178,6 +171,7 @@ SET nombre = nuevoNombre, usuario = nuevoUsuario
 WHERE id = idCuenta;
 SELECT nombre AS nombre, usuario AS usuario FROM usuarios WHERE id = idCuenta ;
 END //
+
 DROP PROCEDURE actualizar_perfil;
 
 -- Procedimiento para eliminar la cuenta
@@ -198,31 +192,27 @@ DELIMITER ;
 
 -- Procedimiento para traer todas las recetas o las recetas por usuario
 DELIMITER //
-CREATE PROCEDURE `traer_recetas`(IN id_usuario INT)
+CREATE PROCEDURE `traer_recetas`(IN idUsuario INT)
 BEGIN
-IF id_usuario IS NOT NULL
+IF idUsuario IS NOT NULL
 THEN
-SELECT u.usuario, u.url_avatar, r.titulo , r.url_imagen, r.pasos, r.createdAt
-FROM usuarios_recetas ur
+SELECT u.usuario, u.url_avatar, r.titulo, r.url_imagen,  r.pasos, r.createdAt
+FROM recetas r
 LEFT JOIN usuarios u
-ON ur.id_usuario = u.id
-LEFT JOIN recetas AS r
-ON ur.id_receta = r.id
-WHERE u.id = id_usuario
-ORDER BY ur.id_tabla;
+ON r.id_usuario = u.id
+WHERE u.id = idUsuario
+ORDER BY u.id;
 ELSE 
-SELECT u.usuario, u.url_avatar, r.titulo , r.url_imagen, r.pasos, r.createdAt
-FROM usuarios_recetas ur
+SELECT u.usuario, u.url_avatar, r.titulo, r.url_imagen,  r.pasos, r.createdAt
+FROM recetas r
 LEFT JOIN usuarios u
-ON ur.id_usuario = u.id
-LEFT JOIN recetas AS r
-ON ur.id_receta = r.id
-ORDER BY ur.id_tabla;
+ON r.id_usuario = u.id
+ORDER BY r.titulo;
 END IF;
 END //
 
 DELIMITER //
-CALL traer_recetas(NULL);
+CALL traer_recetas(2);
 
 DELIMITER //
 CREATE PROCEDURE `categorias_por_receta`(IN idReceta INT)
