@@ -251,6 +251,5 @@ DELIMITER //
 CREATE TRIGGER eliminar_categoria_de_receta AFTER DELETE ON recetas
 FOR EACH ROW
 BEGIN
-	DELETE FROM categoria_recetas WHERE id_receta = OLD.id;
+	DELETE FROM categorias_recetas WHERE id_receta = OLD.id;
 END //
-

@@ -98,10 +98,28 @@ const fechaFormateada = `${anio}-${mes}-${dia}`;
         }
         sequelize.query(`INSERT INTO categorias_recetas(id_receta, id_categoria) VALUES ${text.substring(0, text.length -1)};`)
         })
-      .then(res => {
+      .then(() => {
         res.redirect('/usuario/recetas')
       })
       .catch(err => console.log(err)) 
+  },
+  'eliminarReceta': async function(req, res){
+    const idReceta = req.params.id
+    
+      await sequelize.query(`DELETE FROM recetas WHERE id = ${idReceta}`,
+      (err, results) => {
+        if(err){
+          console.log(err)
+        }
+        else {
+          res.redirect('usuario/recetas')
+        }
+      }
+      )
+      
+      res.redirect('/usuario/recetas')
+    
+   
   }
 }
 

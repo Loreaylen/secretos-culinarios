@@ -11,7 +11,7 @@
 <a href="/usuario/recetas/agregar">Agregar receta</a>
 <section class="recetasContainer">
 <% for (let receta of recetas) { %>
-<article class="receta" id="receta.id">
+<article class="receta" id="<%- receta.id %>">
 <div>
   <img src="<%- receta.url_imagen %>" alt="<%- receta.titulo %>">
 </div>
@@ -19,8 +19,11 @@
 <h2><%- receta.titulo %></h2>
 </div>
 <div class="contenedorBotones">
-  <button>Editar</button>
-  <button>Eliminar</button>
+  <form action="/usuario/recetas/eliminar/<%= receta.id%>?_method=DELETE" method="POST">
+    <button>Editar</button>
+    <button class="eliminarReceta">Eliminar</button>
+  </form>
+
 </div>
 </article>
 <%}%>
@@ -33,6 +36,7 @@
   <%}%>
 </section>
 
-
+<%- include('./shared/scripts')%>
+    <script src="/javascripts/editarEliminarRecetas.js"></script>
   </body>
 </html>
