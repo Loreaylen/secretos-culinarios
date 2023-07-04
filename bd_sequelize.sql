@@ -214,9 +214,10 @@ END IF;
 END //
 
 DELIMITER //
-CALL traer_recetas(NULL);
+CALL traer_recetas(29);
 
 DROP PROCEDURE traer_recetas;
+SELECT * FROM recetas;
 
 -- DELIMITER //
 -- CREATE PROCEDURE `categorias_por_receta`(IN idReceta INT)
@@ -238,3 +239,18 @@ LEFT JOIN usuarios u ON u.id = r.id_usuario
 GROUP BY r.id;
 
 SELECT * FROM categorias;
+
+SELECT * FROM recetas;
+DELETE FROM recetas
+WHERE id = 9;
+
+SELECT * FROM categorias_recetas;
+
+-- Trigger para eliminar las categorías de la receta eliminada
+DELIMITER //
+CREATE TRIGGER eliminar_categoria_de_receta AFTER DELETE ON recetas
+FOR EACH ROW
+BEGIN
+	DELETE FROM categoria_recetas WHERE id_receta = OLD.id;
+END //
+

@@ -56,8 +56,7 @@ const usuarioControl = {
       const [data, metadata] = await sequelize.query(`CALL traer_recetas(${idUser})`, {
         nest: true
       })
-      console.log(data, data.length)
-     res.render('recetasUsuario', {nombrePag: 'Mis recetas', sesion: req.session.user, recetas: data})
+     res.render('recetasUsuario', {nombrePag: 'Mis recetas', sesion: req.session.user, recetas: Object.values(data)})
     }
     catch (err){
       console.log(err)
@@ -68,7 +67,7 @@ const usuarioControl = {
   'mostrarVistaAgregarReceta': async function(req, res){
     try{
       const [categorias, metadata] = await sequelize.query(`SELECT * FROM categorias;`)
-      res.render('agregarReceta', {nombrePag: 'Agregar Receta', sesion: req.session.user, categorias: categorias})
+      res.render('agregarReceta', {nombrePag: 'Agregar Receta', sesion: req.session.user, categorias: categorias, success: false})
     }
    catch(err){
       res.render('errorPersonalizado', {nombrePag: Error, status: '404', message: 'Ocurrió un error inesperado'})
@@ -77,23 +76,32 @@ const usuarioControl = {
   'agregarReceta': async function(req, res){
     const idUser = req.session.user.id
     const datosReceta = req.body
+
+    const fecha = new Date();
+const dia = fecha.getDate();
+const mes = fecha.getMonth() + 1;
+const anio = fecha.getFullYear();
+
+const fechaFormateada = `${anio}-${mes}-${dia}`;
    
-      await sequelize.query(`
-      INSERT INTO recetas (titulo, url_imagen, pasos, id_usuario)
-      VALUES(${datosReceta.titulo}, ${datosReceta.url_imagen}, ${datosReceta.pasos}, ${idUser})
+      sequelize.query(`
+      INSERT INTO recetas (titulo, url_imagen, pasos, id_usuario, createdAt, updatedAt)
+      VALUES('${datosReceta.titulo}', '${datosReceta.url_imagen}', '${datosReceta.pasos}', ${idUser}, '${fechaFormateada}', '${fechaFormateada}')
       `)
+      .then(resultado => { console.log('RESULTADO', resultado[0], resultado[1])
+        const id = resultado[0]
+        let text = ''
+        const categorias = req.body.categorias
 
-      // if(datosReceta.categorias.length > 0){
-      //   const insertar = ''
-      //   for (let c of datosReceta.categorias){
-      //     insertar += 
-      //   }
-      
-
-      console.log(datosReceta)
-      res.redirect('/usuario/recetas')
-    
-   
+        for (let c of categorias){
+          text += `(${id}, ${c}),`
+        }
+        sequelize.query(`INSERT INTO categorias_recetas(id_receta, id_categoria) VALUES ${text.substring(0, text.length -1)};`)
+        })
+      .then(res => {
+        res.redirect('/usuario/recetas')
+      })
+      .catch(err => console.log(err)) 
   }
 }
 
