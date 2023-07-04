@@ -196,46 +196,45 @@ CREATE PROCEDURE `traer_recetas`(IN idUsuario INT)
 BEGIN
 IF idUsuario IS NOT NULL
 THEN
-SELECT u.usuario, u.url_avatar, r.titulo, r.url_imagen,  r.pasos, r.createdAt
-FROM recetas r
-LEFT JOIN usuarios u
-ON r.id_usuario = u.id
+SELECT u.usuario, u.url_avatar, r.id, r.titulo, r.url_imagen, r.pasos, r.createdAt, GROUP_CONCAT(c.nombre) AS categorias
+FROM categorias_recetas cr
+LEFT JOIN categorias c ON cr.id_categoria = c.id_categoria
+LEFT JOIN recetas r ON cr.id_receta = r.id
+LEFT JOIN usuarios u ON u.id = r.id_usuario
 WHERE u.id = idUsuario
-ORDER BY u.id;
+GROUP BY r.id;
 ELSE 
-SELECT u.usuario, u.url_avatar, r.titulo, r.url_imagen,  r.pasos, r.createdAt
-FROM recetas r
-LEFT JOIN usuarios u
-ON r.id_usuario = u.id
-ORDER BY r.titulo;
+SELECT u.usuario, u.url_avatar, r.id, r.titulo, r.url_imagen, r.pasos, r.createdAt, GROUP_CONCAT(c.nombre) AS categorias
+FROM categorias_recetas cr
+LEFT JOIN categorias c ON cr.id_categoria = c.id_categoria
+LEFT JOIN recetas r ON cr.id_receta = r.id
+LEFT JOIN usuarios u ON u.id = r.id_usuario
+GROUP BY r.id;
 END IF;
 END //
 
 DELIMITER //
 CALL traer_recetas(NULL);
 
-DELIMITER //
-CREATE PROCEDURE `categorias_por_receta`(IN idReceta INT)
-BEGIN
-SELECT c.nombre 
-FROM categorias_recetas cr
-LEFT JOIN categorias c
-ON cr.id_categoria = c.id_categoria
-WHERE id_receta = idReceta;
-END //
+DROP PROCEDURE traer_recetas;
 
-SELECT u.usuario, u.url_avatar, r.titulo, r.url_imagen,  r.pasos, r.createdAt, c.nombre
-FROM categorias_recetas cr
-LEFT JOIN categorias c
-ON cr.id_categoria = c.id_categoria
-LEFT JOIN recetas r
-ON cr.id_receta = r.id
-LEFT JOIN usuarios u
-ON u.id = r.id_usuario;
+-- DELIMITER //
+-- CREATE PROCEDURE `categorias_por_receta`(IN idReceta INT)
+-- BEGIN
+-- SELECT c.nombre 
+-- FROM categorias_recetas cr
+-- LEFT JOIN categorias c
+-- ON cr.id_categoria = c.id_categoria
+-- WHERE id_receta = idReceta;
+-- END //
 
-SELECT u.usuario, u.url_avatar, r.titulo, r.url_imagen, r.pasos, r.createdAt, GROUP_CONCAT(c.nombre) AS categorias
+-- DROP PROCEDURE categorias_por_receta;
+
+SELECT u.usuario, u.url_avatar, r.id, r.titulo, r.url_imagen, r.pasos, r.createdAt, GROUP_CONCAT(c.nombre) AS categorias
 FROM categorias_recetas cr
 LEFT JOIN categorias c ON cr.id_categoria = c.id_categoria
 LEFT JOIN recetas r ON cr.id_receta = r.id
 LEFT JOIN usuarios u ON u.id = r.id_usuario
 GROUP BY r.id;
+
+SELECT * FROM categorias;

@@ -52,17 +52,48 @@ const usuarioControl = {
   },
   'cargarRecetasUsuario': async function(req,res){
     const idUser = req.session.user.id
-    const data = await sequelize.query(`SELECT u.usuario, u.url_avatar, r.titulo, r.url_imagen, r.pasos, r.createdAt, GROUP_CONCAT(c.nombre) AS categorias
-    FROM categorias_recetas cr
-    LEFT JOIN categorias c ON cr.id_categoria = c.id_categoria
-    LEFT JOIN recetas r ON cr.id_receta = r.id
-    LEFT JOIN usuarios u ON u.id = r.id_usuario
-    GROUP BY r.id;`, {
-      nest: true
-    })
-    console.log(data)
+    try {
+      const [data, metadata] = await sequelize.query(`CALL traer_recetas(${idUser})`, {
+        nest: true
+      })
+      console.log(data, data.length)
+     res.render('recetasUsuario', {nombrePag: 'Mis recetas', sesion: req.session.user, recetas: data})
+    }
+    catch (err){
+      console.log(err)
+    }
    
   
+  },
+  'mostrarVistaAgregarReceta': async function(req, res){
+    try{
+      const [categorias, metadata] = await sequelize.query(`SELECT * FROM categorias;`)
+      res.render('agregarReceta', {nombrePag: 'Agregar Receta', sesion: req.session.user, categorias: categorias})
+    }
+   catch(err){
+      res.render('errorPersonalizado', {nombrePag: Error, status: '404', message: 'Ocurrió un error inesperado'})
+   }
+  },
+  'agregarReceta': async function(req, res){
+    const idUser = req.session.user.id
+    const datosReceta = req.body
+   
+      await sequelize.query(`
+      INSERT INTO recetas (titulo, url_imagen, pasos, id_usuario)
+      VALUES(${datosReceta.titulo}, ${datosReceta.url_imagen}, ${datosReceta.pasos}, ${idUser})
+      `)
+
+      // if(datosReceta.categorias.length > 0){
+      //   const insertar = ''
+      //   for (let c of datosReceta.categorias){
+      //     insertar += 
+      //   }
+      
+
+      console.log(datosReceta)
+      res.redirect('/usuario/recetas')
+    
+   
   }
 }
 

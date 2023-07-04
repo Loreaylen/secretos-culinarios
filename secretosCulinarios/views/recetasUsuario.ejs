@@ -1,1 +1,38 @@
-<p>recetas usuario</p>
+<!DOCTYPE html>
+<html>
+  <%- include('./shared/head')%>
+  <body>
+    <%- include('./shared/header')%>
+    
+    <main>
+<h1><%-nombrePag%></h1>
+
+<%if(recetas.length > 0) { %>
+<a href="/usuario/recetas/agregar">Agregar receta</a>
+<section class="recetasContainer">
+<% for (let receta of recetas) { %>
+<article class="receta" id="receta.id">
+<div>
+  <img src="<%- receta.url_imagen %>" alt="<%- receta.titulo %>">
+</div>
+<div class="textoReceta">
+<h2><%- receta.titulo %></h2>
+</div>
+<div class="contenedorBotones">
+  <button>Editar</button>
+  <button>Eliminar</button>
+</div>
+</article>
+<%}%>
+<%}  else { %>
+  <section>
+    <h2>No tienes recetas publicadas</h2>
+    <p>Agrega tus recetas favoritas</p>
+    <a href="/usuario/recetas/agregar">Agregar receta</a>
+  </section>
+  <%}%>
+</section>
+
+
+  </body>
+</html>

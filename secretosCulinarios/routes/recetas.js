@@ -3,9 +3,9 @@ const router = express.Router()
 const { mostrarTodas, buscar, mostrarDetalle } = require('../controllers/recetasControl')
 
 router.get('/', mostrarTodas)
-router.get('/:nombreDato', buscar)
 router.get('/:idReceta', mostrarDetalle)
-router.get('/:nombreDato/:idReceta', mostrarDetalle)
+// router.get('/:nombreDato', buscar)
+// router.get('/:nombreDato/:idReceta', mostrarDetalle)
 
 
 
