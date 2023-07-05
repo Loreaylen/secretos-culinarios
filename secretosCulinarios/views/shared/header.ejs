@@ -20,8 +20,8 @@
 <%if(sesion) {%>
   <section class="menuUsuarioCtn">
     <div class="datosUsuario">
-      <div class="fotoPerfil">
-        <img src="<%- sesion.avatar ? `/uploads/${sesion.avatar}` : '/images/fotoEnBlanco.png' %>" alt="Avatar usuario">
+      <div class="fotoPerfil"> <img src="<%- sesion.avatar ? `/uploads/${sesion.avatar}` : '/images/fotoEnBlanco.png' %>" alt="Avatar usuario">
+       
       </div>
       <h3 class="nombreUsuario"><%- sesion.usuario%></h3>
     </div>

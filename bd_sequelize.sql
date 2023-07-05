@@ -197,17 +197,17 @@ BEGIN
 IF idUsuario IS NOT NULL
 THEN
 SELECT u.usuario, u.url_avatar, r.id, r.titulo, r.url_imagen, r.pasos, r.createdAt, GROUP_CONCAT(c.nombre) AS categorias
-FROM categorias_recetas cr
+FROM recetas r
+LEFT JOIN categorias_recetas cr ON cr.id_receta = r.id
 LEFT JOIN categorias c ON cr.id_categoria = c.id_categoria
-LEFT JOIN recetas r ON cr.id_receta = r.id
 LEFT JOIN usuarios u ON u.id = r.id_usuario
 WHERE u.id = idUsuario
 GROUP BY r.id;
 ELSE 
 SELECT u.usuario, u.url_avatar, r.id, r.titulo, r.url_imagen, r.pasos, r.createdAt, GROUP_CONCAT(c.nombre) AS categorias
-FROM categorias_recetas cr
+FROM recetas r
+LEFT JOIN categorias_recetas cr ON cr.id_receta = r.id
 LEFT JOIN categorias c ON cr.id_categoria = c.id_categoria
-LEFT JOIN recetas r ON cr.id_receta = r.id
 LEFT JOIN usuarios u ON u.id = r.id_usuario
 GROUP BY r.id;
 END IF;
@@ -215,6 +215,8 @@ END //
 
 DELIMITER //
 CALL traer_recetas(29);
+
+SELECT * FROM usuarios;
 
 DROP PROCEDURE traer_recetas;
 SELECT * FROM recetas;
@@ -231,20 +233,20 @@ SELECT * FROM recetas;
 
 -- DROP PROCEDURE categorias_por_receta;
 
-SELECT u.usuario, u.url_avatar, r.id, r.titulo, r.url_imagen, r.pasos, r.createdAt, GROUP_CONCAT(c.nombre) AS categorias
-FROM categorias_recetas cr
+DELIMITER //
+CREATE PROCEDURE `traer_receta_detallada`(IN idReceta INT, IN idUser INT)
+BEGIN
+SELECT r.*, GROUP_CONCAT(c.nombre) AS categorias 
+FROM recetas r
+LEFT JOIN categorias_recetas cr ON cr.id_receta = r.id
 LEFT JOIN categorias c ON cr.id_categoria = c.id_categoria
-LEFT JOIN recetas r ON cr.id_receta = r.id
-LEFT JOIN usuarios u ON u.id = r.id_usuario
+WHERE r.id = idReceta AND r.id_usuario = idUser
 GROUP BY r.id;
+END //
 
-SELECT * FROM categorias;
+DROP PROCEDURE traer_receta_detallada;
 
-SELECT * FROM recetas;
-DELETE FROM recetas
-WHERE id = 9;
-
-SELECT * FROM categorias_recetas;
+SELECT * FROM recetas WHERE id_usuario = 29;
 
 -- Trigger para eliminar las categorías de la receta eliminada
 DELIMITER //
@@ -253,3 +255,22 @@ FOR EACH ROW
 BEGIN
 	DELETE FROM categorias_recetas WHERE id_receta = OLD.id;
 END //
+
+
+SELECT * FROM recetas;
+
+DELIMITER //
+CREATE PROCEDURE `actualizar_receta`(IN idReceta INT, IN nuevoTitulo VARCHAR(150), IN nuevosPasos TEXT, IN nuevaImagen VARCHAR(500))
+BEGIN
+UPDATE recetas
+SET titulo = nuevoTitulo, pasos = nuevosPasos, url_imagen = nuevaImagen, updatedAt = CURDATE()
+WHERE id = idReceta;
+
+DELETE FROM categorias_recetas WHERE id_receta = idReceta;
+END //
+
+SELECT * FROM categorias_recetas;
+
+INSERT INTO categorias_recetas(id_receta, id_categoria) VALUES (29,1);
+
+CALL traer_recetas(29);

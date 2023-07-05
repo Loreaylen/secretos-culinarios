@@ -19,7 +19,9 @@ const recetasControl = {
   
   if(typeof recetas !== 'undefined'){
     const receta = recetas.find(el => el.id == idReceta)
-    console.log('RECETA', receta)
+    const arrCategorias = receta.categorias.split(',')
+    receta.categorias = arrCategorias
+    console.log('RECETA', receta.categorias)
     res.render('vistaDetallada', {nombrePag: receta.titulo, receta: receta, sesion: req.session.user || false})
   }
   else {

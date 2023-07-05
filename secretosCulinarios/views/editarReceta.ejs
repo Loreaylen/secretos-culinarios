@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<%-include('./shared/head')%>
+<body>
+  <%-include('./shared/header')%>
+
+  <main>
+    <h1>Editando receta: <%-receta.titulo %></h1>
+    <form class="formEditarReceta" action="/usuario/recetas/editar/<%- receta.id %>?_method=PUT" method="post" novalidate enctype="multipart/form-data">
+      <label for="titulo">Titulo</label>
+      <input type="text" name="titulo" value="<%- receta.titulo %>">
+
+      <section class="imagenRecetaContainer">
+        <div class="imagenReceta">
+          <img src="<%- receta.url_imagen ? `/uploads/${receta.url_imagen}` : 'https://theme-assets.getbento.com/sensei/fbd08bb.sensei/assets/images/catering-item-placeholder-704x520.png' %>" alt="<%-receta.titulo %>">
+        </div> 
+        <input  type="file" name="imagenReceta">
+      </section>
+  
+
+      <label for="pasos">Ingredientes y Preparación:</label>
+      <textarea name="pasos" id="pasos" cols="30" rows="10"><%- receta.pasos %></textarea>
+
+      <div class="contenedorCheckbox">
+            <% let check = '' %>
+            <% if (receta.categorias) {
+              check = receta.categorias.includes(c.nombre) ? 'checked' : '';
+            } %>
+
+        <h3>Seleccionar una o varias categorías</h3>
+        <%for (let c of categorias) {%>
+          <input type="checkbox" name="categorias" value="<%-c.id_categoria%>" id="cat<%-c.id_categoria%>" class="checkboxCategorias" <%= check %>>
+          <label for="<%-c.id_categoria%>"><%-c.nombre%></label>
+      </div>
+      <%}%>
+
+      <button type="submit">Modificar</button>
+    </form>
+
+   
+  </main>
+
+  <%-include('./shared/footer')%> 
+</body>
+</html>

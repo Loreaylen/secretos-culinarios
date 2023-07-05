@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const { cargarPerfil, editarPerfil, eliminarCuenta, cargarRecetasUsuario, cargarError,
-   mostrarVistaAgregarReceta, agregarReceta, eliminarReceta } = require('../controllers/usuarioControl')
 const multer = require('multer');
+const { cargarPerfil, editarPerfil, eliminarCuenta, cargarRecetasUsuario, cargarError,
+mostrarVistaAgregarReceta, agregarReceta, eliminarReceta, editarReceta, mostrarVistaEditarReceta } = require('../controllers/usuarioControl')
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -16,27 +16,26 @@ const storage = multer.diskStorage({
   },
   limits: {
       fieldSize: 10 * 1024 * 1024
-      }
-  
+      }  
 });
-
 
 const upload = multer({storage: storage});
 
-
 router.get('/', function(req,res){
   res.render('errorPersonalizado', {nombrePag: 'Error 404', message: 'No se encontró la página solicitada', status:'404'})
-} )
-
+})
 router.get('/perfil', cargarPerfil)
-router.put('/perfil', upload.single('subirAvatar'), editarPerfil )
-router.delete('/perfil/eliminar', eliminarCuenta )
-
 router.get('/recetas', cargarRecetasUsuario)
 router.get('/recetas/agregar', mostrarVistaAgregarReceta)
-router.post('/recetas/agregar', agregarReceta)
-router.delete('/recetas/eliminar/:id', eliminarReceta)
-
+router.get('/recetas/editar/:id', mostrarVistaEditarReceta)
 router.get('/*', cargarError)
+
+router.post('/recetas/agregar', upload.single('imagenReceta'), agregarReceta)
+
+router.put('/perfil', upload.single('subirAvatar'), editarPerfil )
+router.put('/recetas/editar/:id', upload.single('imagenReceta'), editarReceta)
+
+router.delete('/perfil/eliminar', eliminarCuenta )
+router.delete('/recetas/eliminar/:id', eliminarReceta)
 
 module.exports = router;

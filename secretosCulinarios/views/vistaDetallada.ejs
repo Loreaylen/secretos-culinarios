@@ -9,7 +9,7 @@
 <a href="/recetas">Volver</a>
 <section class="detalleUsuario">
   <div class="imagenUsuario">
-    <img src="<%- receta.url_avatar || '/images/fotoEnBlanco.png' %>" alt="Avatar usuario" >
+    <img src="<%- receta.url_avatar ? `/uploads/${receta.url_avatar}` : '/images/fotoEnBlanco.png' %>" alt="Avatar usuario">
   </div>
   <div class="datosUsuario">
     <p>Creado por <%- receta.usuario %> el <%- receta.createdAt%> </p>
@@ -17,11 +17,19 @@
 </section>
 <section class="vistaDetallada">
   <div>
-    <img src="<%- receta.url_imagen || 'https://theme-assets.getbento.com/sensei/fbd08bb.sensei/assets/images/catering-item-placeholder-704x520.png' %>" alt="receta.titulo">
+    <img src="<%- receta.url_imagen ? `/uploads/${receta.url_imagen}` : 'https://theme-assets.getbento.com/sensei/fbd08bb.sensei/assets/images/catering-item-placeholder-704x520.png' %>" alt="<%-receta.titulo %>">
     </div>
   </div>
   <article>
     <pre><%- receta.pasos %></pre>
+  </article>
+  <article>
+    <h3>Categorías</h3>
+    <div class="contenedorCategorias">
+      <% for (let c of receta.categorias) { %>
+        <p class="categoria"><%- c %></p>
+        <% }%>
+    </div>
   </article>
 </section>
    

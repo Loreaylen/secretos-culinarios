@@ -13,14 +13,15 @@
 <% for (let receta of recetas) { %>
 <article class="receta" id="<%- receta.id %>">
 <div>
-  <img src="<%- receta.url_imagen %>" alt="<%- receta.titulo %>">
+  <img src="<%- receta.url_imagen ? `/uploads/${receta.url_imagen}` : 'https://theme-assets.getbento.com/sensei/fbd08bb.sensei/assets/images/catering-item-placeholder-704x520.png' %>" alt="<%-receta.titulo %>">
 </div>
 <div class="textoReceta">
 <h2><%- receta.titulo %></h2>
 </div>
 <div class="contenedorBotones">
+  <a href="/usuario/recetas/editar/<%- receta.id %>">Editar</a>
   <form action="/usuario/recetas/eliminar/<%= receta.id%>?_method=DELETE" method="POST">
-    <button>Editar</button>
+    
     <button class="eliminarReceta">Eliminar</button>
   </form>
 

@@ -6,13 +6,14 @@
 
   <main>
     <h1>Agregar nueva receta</h1>
-    <form action="/usuario/recetas/agregar" method="post" novalidate>
+    <form action="/usuario/recetas/agregar" method="post" novalidate enctype="multipart/form-data">
       <label for="titulo">Titulo</label>
       <input type="text" name="titulo">
-      
-      <label for="urlImagen">Url de la imagen:</label>
-      <input type="text" name="urlImagen">
-      
+
+      <section class="avatarUsuarioContainer">
+        <input  type="file" name="imagenReceta">
+      </section>
+  
 
       <label for="pasos">Ingredientes y Preparación:</label>
       <textarea name="pasos" id="pasos" cols="30" rows="10"></textarea>
