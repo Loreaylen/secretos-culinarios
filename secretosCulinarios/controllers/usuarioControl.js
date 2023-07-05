@@ -193,6 +193,9 @@ const usuarioControl = {
     const idReceta = req.params.id
     const [data, metadata] = await sequelize.query(`CALL traer_receta_detallada(${idReceta}, ${req.session.user.id})`)
     const [categorias, meta] = await sequelize.query("SELECT * FROM categorias;")
+    
+    const arrCategorias = data.categorias.split(',')
+    data.categorias = arrCategorias
     console.log(data)
     res.render('editarReceta', {nombrePag: 'Editar Receta', sesion: req.session.user, receta: data, categorias: categorias })
   },
@@ -227,6 +230,9 @@ const usuarioControl = {
           res.redirect("/usuario/recetas");
         })
         .catch((err) => console.log(err));
+  },
+  cambiarContraseña: async function (req, res) {
+
   }
 };
 

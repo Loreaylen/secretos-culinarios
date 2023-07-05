@@ -22,13 +22,13 @@
       <textarea name="pasos" id="pasos" cols="30" rows="10"><%- receta.pasos %></textarea>
 
       <div class="contenedorCheckbox">
-            <% let check = '' %>
+
+        <h3>Seleccionar una o varias categorías</h3>
+        <% let check = '' %>
+        <%for (let c of categorias) {%>
             <% if (receta.categorias) {
               check = receta.categorias.includes(c.nombre) ? 'checked' : '';
             } %>
-
-        <h3>Seleccionar una o varias categorías</h3>
-        <%for (let c of categorias) {%>
           <input type="checkbox" name="categorias" value="<%-c.id_categoria%>" id="cat<%-c.id_categoria%>" class="checkboxCategorias" <%= check %>>
           <label for="<%-c.id_categoria%>"><%-c.nombre%></label>
       </div>
