@@ -7,12 +7,6 @@
     <main>
 <h1>Mi perfil</h1>
 
-<section class="avatarUsuarioContainer">
- <div class="avatarUsuario">
-    <img src="<%- sesion.avatar || 'fotoEnBlanco.png' %>" alt="Avatar usuario">
-  </div> 
-
-</section>
 
 <% if (typeof success !== 'undefined') { %>
   <div class="containerMensaje">
@@ -24,7 +18,14 @@
   </div>
 <% } %>
 
-      <form method="post" novalidate>
+      <form class="formEditarPerfil" action="/usuario/perfil?_method=PUT" method="post" novalidate enctype="multipart/form-data">
+        <section class="avatarUsuarioContainer">
+        <div class="avatarUsuario">
+          <img src="<%- sesion.avatar ? `/uploads/${sesion.avatar}` : '/images/fotoEnBlanco.png' %>" alt="Avatar usuario">
+        </div> 
+        <input class='inputEditable' type="file" name="subirAvatar" disabled>
+      </section>
+
         <label for="nombre">Nombre:</label>
         <input class='inputEditable' type="text" name="nombre" value="<%-sesion.nombre%>" placeholder="<%-sesion.nombre%>" disabled> 
  

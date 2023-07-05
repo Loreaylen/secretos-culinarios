@@ -164,10 +164,10 @@ END //
 DELIMITER ;
 -- Procedimiento para actualizar NOMBRE y NOMBRE DE USUARIO del perfil, nada más.
 DELIMITER //
-CREATE PROCEDURE `actualizar_perfil`(IN idCuenta INT, IN nuevoNombre VARCHAR(100), IN nuevoUsuario VARCHAR(20))
+CREATE PROCEDURE `actualizar_perfil`(IN idCuenta INT, IN nuevoNombre VARCHAR(100), IN nuevoUsuario VARCHAR(20), IN nuevaUrl VARCHAR(500))
 BEGIN
 UPDATE usuarios
-SET nombre = nuevoNombre, usuario = nuevoUsuario
+SET nombre = nuevoNombre, usuario = nuevoUsuario, url_avatar = nuevaUrl
 WHERE id = idCuenta;
 SELECT nombre AS nombre, usuario AS usuario FROM usuarios WHERE id = idCuenta ;
 END //

@@ -15,11 +15,19 @@ const usuarioControl = {
     const datosBody = req.body
     const sessionUser = req.session.user
     const id = req.session.user.id
+    const archivo = req.file
+
+    
+    if(!archivo){
+      throw Error('No se pudo subir el archivo')
+    }
+    const ruta = archivo.path.slice(15, archivo.path.length)
 
     try{
-      const [data, metadat] = await sequelize.query(`CALL actualizar_perfil(${id}, '${datosBody.nombre}', '${datosBody.usuario}')`)
+      const [data, metadat] = await sequelize.query(`CALL actualizar_perfil(${id}, '${datosBody.nombre}', '${datosBody.usuario}', '${ruta}')`)
       sessionUser.nombre = data.nombre;
       sessionUser.usuario = data.usuario;
+      sessionUser.avatar = ruta;
       res.render('perfil', {nombrePag: 'Mi perfil', sesion: req.session.user, success: true})
     }
     catch(err){
