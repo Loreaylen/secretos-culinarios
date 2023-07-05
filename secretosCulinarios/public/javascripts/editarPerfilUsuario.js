@@ -6,6 +6,8 @@ const modal = $(".modal")
 const botonConfirmarEliminar = $(".botonConfirmarEliminar")
 const botonCancelarEliminar = $(".botonCancelarEliminar")
 const containerMensaje = $('.containerMensaje')
+const formEditarPerfil = $('.formEditarPerfil')
+const url = formEditarPerfil.action
 
 const editarInput = () => {
   inputEditable.removeAttr("disabled");
@@ -24,13 +26,13 @@ const guardarCambios =  () => {
   $(inputEditable).attr("disabled");
  
 
-   fetch("/usuario/perfil", {
-    method: "POST",
+   fetch( url, {
+    method: "PUT",
     headers: {
       Accept: "application.json",
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
     },
-    body: JSON.stringify(guardar),
+    body: guardar,
     cache: "default",
   })
   .then((res) => {

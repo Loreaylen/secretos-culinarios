@@ -1,1 +1,33 @@
-<p>Todas las recetas</p>
+<!DOCTYPE html>
+<html>
+  <%- include('./shared/head')%>
+  <body>
+    <%- include('./shared/header')%>
+    
+    <main>
+<h1><%- nombrePag %></h1>
+
+<section class="TodasLasRecetas">
+  <%for (let receta of recetas) {%>
+<article class="contenedorReceta" id="<%- receta.id%>"> 
+  <a href="/recetas/<%- receta.id%>">
+    <div class="contenedorImagen">
+    <img src="<%- receta.url_imagen ? `/uploads/${receta.url_imagen}` : 'https://theme-assets.getbento.com/sensei/fbd08bb.sensei/assets/images/catering-item-placeholder-704x520.png' %>" alt="receta.titulo">
+    </div>
+    <h2><%- receta.titulo %></h2>
+    <div class="usuarioContenedor">
+      <div>
+        <img src="<%- receta.url_avatar ? `/uploads/${receta.url_avatar}` : '/images/fotoEnBlanco.png' %>" alt="Avatar usuario">
+      </div>
+      <p>Por <%- receta.usuario %></p>
+      <p>Creado el <%- receta.createdAt %> </p>
+    </div>
+  </a>
+</article>
+        <% } %>
+    </main>
+    <%- include('./shared/footer')%>
+
+    <%- include('./shared/scripts')%>
+  </body>
+</html>

@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const sequelize = require('../database/connect.js')
-const Usuario = require('../models/Usuario')
+const Usuario = require('../models/OneToMany/Usuario')
 
 const loginControl = {
   'mostrarLogin': function(req,res){

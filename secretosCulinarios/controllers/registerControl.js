@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt')
-const Usuario = require('../models/Usuario')
+const Usuario = require('../models/OneToMany/Usuario')
 
 
 const registerControl = {

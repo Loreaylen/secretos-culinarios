@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<%-include('./shared/head')%>
+<body>
+  <%-include('./shared/header')%>
+
+  <main>
+    <h1>Agregar nueva receta</h1>
+    <form action="/usuario/recetas/agregar" method="post" novalidate enctype="multipart/form-data">
+      <label for="titulo">Titulo</label>
+      <input type="text" name="titulo">
+
+      <section class="avatarUsuarioContainer">
+        <input  type="file" name="imagenReceta">
+      </section>
+  
+
+      <label for="pasos">Ingredientes y Preparación:</label>
+      <textarea name="pasos" id="pasos" cols="30" rows="10"></textarea>
+
+      <div class="contenedorCheckbox">
+        <h3>Seleccionar una o varias categorías</h3>
+        <%for (let c of categorias) {%>
+          <input type="checkbox" name="categorias" value="<%-c.id_categoria%>" id="cat<%-c.id_categoria%>" class="checkboxCategorias">
+          <label for="<%-c.id_categoria%>"><%-c.nombre%></label>
+      </div>
+      <%}%>
+
+      <button type="submit">Agregar</button>
+    </form>
+
+   
+  </main>
+
+  <%-include('./shared/footer')%> 
+</body>
+</html>
