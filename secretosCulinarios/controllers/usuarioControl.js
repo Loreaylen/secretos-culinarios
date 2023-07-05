@@ -6,12 +6,19 @@ const Categoria = require("../models/ManyToMany/Categoria.js");
 const usuarioControl = {
   cargarError: function (req, res) {
     res.render("errorPersonalizado", {
-      nombrePag: Error,
+      nombrePag: 'Error',
       status: "404",
       message: "No se encontró la página solicitada",
     });
   },
   cargarPerfil: function (req, res) {
+    if(!req.session.user) {
+      res.render("errorPersonalizado", {
+        nombrePag: 'Error',
+        status: "401",
+        message: "Usted no está autorizado.",
+      });
+    }
     res.render("perfil", {
       nombrePag: "Mi perfil",
       sesion: req.session.user,
@@ -70,6 +77,14 @@ const usuarioControl = {
     }
   },
   cargarRecetasUsuario: async function (req, res) {
+
+    if(!req.session.user) {
+      res.render("errorPersonalizado", {
+        nombrePag: 'Error',
+        status: "401",
+        message: "Usted no está autorizado.",
+      })}
+    
     const idUser = req.session.user.id;
     try {
       const [data, metadata] = await sequelize.query(
@@ -88,6 +103,13 @@ const usuarioControl = {
     }
   },
   mostrarVistaAgregarReceta: async function (req, res) {
+    if(!req.session.user) {
+      res.render("errorPersonalizado", {
+        nombrePag: 'Error',
+        status: "401",
+        message: "Usted no está autorizado.",
+      })}
+
     try {
       const [categorias, metadata] = await sequelize.query(
         `SELECT * FROM categorias;`
