@@ -5,32 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require('express-session')
 const methodOverride = require('method-override')
-const multer = require('multer');
-
-
-// const CURRENT_DIR = dirname(fileURLToPath(import.meta.url))
-// const MIMETYPES = ['image/jpeg', 'image/png']
-// const multerUpload = multer({
-//   storage: multer.diskStorage({
-//     destination: function(req, file, cb){
-//       cb(null, '/uploads')
-//     },
-//     filename: (req, file, cb) => {
-//       const fileExtension = extname(file.originalname)
-//       const fileName = file.originalname.split(fileExtension[0])
-
-//       cb(null, `S{fileName}-${Date.now()}${fileExtension}`)
-//     }
-//   }) ,
-//   fileFilter: (req, file, callback) => {
-//     if(MIMETYPES.includes(file.mimetype)) callback(null, true)
-//     else callback(new Error('Formato incorrecto'))
-//   },
-//   limits: {
-//     fieldSize: 100000000
-//   }
-// })
-
 
 
 const sequelize = require('./database/connect.js')
@@ -50,7 +24,6 @@ const registerRouter = require('./routes/register')
 const loginRouter = require('./routes/login')
 const logoutRouter = require('./routes/logout')
 const usuarioRouter = require('./routes/usuario');
-const { fileURLToPath } = require('url');
 
 var app = express();
 
@@ -75,7 +48,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'))
 
-
+// Configuración de rutas
 app.use('/', indexRouter);
 app.use('/recetas', recetasRouter)
 app.use('/register', registerRouter)

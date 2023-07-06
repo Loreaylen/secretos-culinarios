@@ -19,9 +19,10 @@ const recetasControl = {
   
   if(typeof recetas !== 'undefined'){
     const receta = recetas.find(el => el.id == idReceta)
-    const arrCategorias = receta.categorias.split(',')
-    receta.categorias = arrCategorias
-    console.log('RECETA', receta.categorias)
+    if(typeof receta.categorias === 'string'){
+      const arrCategorias = receta.categorias === 'null' ? ['Sin categorías'] : receta.categorias.split(',')
+      receta.categorias = arrCategorias
+    }
     res.render('vistaDetallada', {nombrePag: receta.titulo, receta: receta, sesion: req.session.user || false})
   }
   else {

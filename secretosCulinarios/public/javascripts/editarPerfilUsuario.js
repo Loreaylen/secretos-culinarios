@@ -7,7 +7,9 @@ const botonConfirmarEliminar = $(".botonConfirmarEliminar")
 const botonCancelarEliminar = $(".botonCancelarEliminar")
 const containerMensaje = $('.containerMensaje')
 const formEditarPerfil = $('.formEditarPerfil')
+const formEliminarCuenta = $('.formEliminarCuenta')
 const url = formEditarPerfil.action
+const urlEliminar = formEliminarCuenta.action
 
 const editarInput = () => {
   inputEditable.removeAttr("disabled");
@@ -58,13 +60,12 @@ const cancelarEliminacion = () => {
 }
 
 const eliminarCuenta =  () => {
-  fetch("/usuario/perfil/eliminar", {
+  fetch( urlEliminar, {
   method: "DELETE"
 })
 .then((res) => {
   console.log(res);
   $(modal).addClass('invisible')
-  window.location.replace('http://localhost:3000')
 })
 .catch((err) => console.log("hubo un error: ", err));
 }

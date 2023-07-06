@@ -69,8 +69,10 @@ const usuarioControl = {
             return;
           }
           console.log("SESION DESTRUIDA");
+          setTimeout(()=> {
+            res.redirect('/')
+          }, 1000)
         });
-        return true;
       } else throw Error("El procedimiento falló");
     } catch (err) {
       console.log("no se pudo eliminar el usuario, ", err);

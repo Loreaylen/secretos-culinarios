@@ -4,9 +4,9 @@
   <body>
     <%- include('./shared/header')%>
     
-    <main>
+    <main class="vistaDetallada">
 <h1><%- nombrePag %></h1>
-<a href="/recetas">Volver</a>
+<a class="botonVolver" href="/recetas">Volver</a>
 <section class="detalleUsuario">
   <div class="imagenUsuario">
     <img src="<%- receta.url_avatar ? `/uploads/${receta.url_avatar}` : '/images/fotoEnBlanco.png' %>" alt="Avatar usuario">

@@ -256,6 +256,12 @@ BEGIN
 	DELETE FROM categorias_recetas WHERE id_receta = OLD.id;
 END //
 
+DELIMITER //
+CREATE TRIGGER eliminar_recetas_usuario BEFORE DELETE ON usuarios
+FOR EACH ROW
+BEGIN 
+	DELETE FROM recetas WHERE id_usuario = OLD.id;
+END //
 
 SELECT * FROM recetas;
 
@@ -274,3 +280,5 @@ SELECT * FROM categorias_recetas;
 INSERT INTO categorias_recetas(id_receta, id_categoria) VALUES (29,1);
 
 CALL traer_recetas(29);
+
+SELECT * FROM usuarios;

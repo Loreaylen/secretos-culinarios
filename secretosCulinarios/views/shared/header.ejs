@@ -1,38 +1,43 @@
 <header>
   <div class="logo">
-    <img src="" alt="">
+    <img src="/images/logo.png" alt="logo">
+  </div>
+  <div class="toggleMenu">
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
   <nav class="menuPrincipal">
     <ul>
       <li><a href="/">Inicio</a></li>
       <li><a href="/recetas">Recetas</a></li>
     </ul>
-  </nav>
-  
-<div class="menuCambiante">
-  <%if(!sesion) {%>
-  <section class="inicioRegistro">
-    <a href="/login" class="iniciarSesionBtn">Iniciar Sesión</a>
-    <a href="/register" class="registrarseBtn">Registrarse</a>
-  </section>
-<%}%>
-
-<%if(sesion) {%>
-  <section class="menuUsuarioCtn">
-    <div class="datosUsuario">
-      <div class="fotoPerfil"> <img src="<%- sesion.avatar ? `/uploads/${sesion.avatar}` : '/images/fotoEnBlanco.png' %>" alt="Avatar usuario">
-       
-      </div>
-      <h3 class="nombreUsuario"><%- sesion.usuario%></h3>
-    </div>
+    <div class="menuCambiante">
+      <%if(!sesion) {%>
+      <section class="inicioRegistro">
+        <a href="/login" class="iniciarSesionBtn">Iniciar Sesión</a>
+        <a href="/register" class="registrarseBtn">Registrarse</a>
+      </section>
+    <%}%>
     
-    <nav class="menuUsuario">
-      <li><a href="/usuario/perfil">Perfil</a></li>
-      <li><a href="/usuario/recetas">Mis Recetas</a></li>
-      <li><a href="">Favoritos</a></li>
-      <li><a href="/logout">Cerrar Sesión</a></li>
-    </nav>
-  </section>
-  <%}%>
+    <%if(sesion) {%>
+      <div class="toggleUsuario"><img src="<%- sesion.avatar ? `/uploads/${sesion.avatar}` : '/images/fotoEnBlanco.png' %>" alt="Avatar usuario"></div>
+      <section class="menuUsuarioCtn">
+        <div class="datosUsuario">
+          <div class="fotoPerfil"> <img src="<%- sesion.avatar ? `/uploads/${sesion.avatar}` : '/images/fotoEnBlanco.png' %>" alt="Avatar usuario">
+          </div>
+          <h3 class="nombreUsuario"><%- sesion.usuario%></h3>
+        </div>
+        <nav class="menuUsuario">
+          <li><a href="/usuario/perfil">Perfil</a></li>
+          <li><a href="/usuario/recetas">Mis Recetas</a></li>
+          <li><a href="">Favoritos</a></li>
+          <li><a href="/logout">Cerrar Sesión</a></li>
+        </nav>
+      </section>
+      <%}%>
+    </div>
+   
+  </nav>
 
 </header>

@@ -64,7 +64,10 @@
         <h2>¿Seguro que quieres eliminar tu cuenta?</h2>
         <p>Esta acción es irreversible</p>
         <div class="modalBotonesContainer">
-          <button class="botonConfirmarEliminar">Confirmar</button>
+        <form class="formEliminarCuenta" action="/usuario/perfil/eliminar?_method=DELETE" method="post" >
+          <button type="submit" class="botonConfirmarEliminar">Confirmar</button>
+        </form>
+          
           <button class="botonCancelarEliminar">Cancelar</button>
         </div>
        
