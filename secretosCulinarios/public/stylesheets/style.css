@@ -1,15 +1,111 @@
-body {
+:root {
+  --titulo: 'Poppins', sans-serif;
+  --texto: 'Josefin Sans', sans-serif;
+  --menu: 'Montserrat', sans-serif;
+  --color-principal: 
+}
+
+
+*{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+  font-family: var(--menu);
 }
 
+main {
+  width: 100%;
+  height: auto;
+}
 
+.imagenParrafo img {
+  width:100%;
+  height: auto;
+}
+
+h1, h2 {
+  font-family: var(--titulo);
+}
+
+p, span {
+  font-family: var(--texto);
+  font-size: 20px;
+}
+
+/*-------INICIO---------*/
+
+.presentacionInicio {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.parrafo1 {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.parrafo1 .imagenParrafo {
+  width: 100%;
+  height: auto;
+}
+
+.parrafo1 .textoParrafo {
+  padding: 20px;
+}
+
+.parrafo2 {
+  position:relative;
+  width: 100%;
+  height: auto;
+  background-image: url('../images/food-g2fd3e517f_1280.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom left;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.parrafo2 h2 {
+  height: 30px;
+  margin: 10px;
+}
+
+.parrafo2 .textoParrafo {
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.parrafo2:before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1000;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.parrafo2 > * {
+  color:#fff;
+}
 
 .menuUsuarioCtn .fotoPerfil  {
 width: 200px;
@@ -70,4 +166,15 @@ height: auto;
 
 .invisible {
   display: none;
+}
+
+
+@media screen  and (max-width: 800px){
+  p {
+    font-size: 16px;
+  }
+  .parrafo1 {
+    flex-direction: column;
+  }
+
 }
