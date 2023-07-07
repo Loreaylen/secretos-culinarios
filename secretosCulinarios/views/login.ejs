@@ -3,16 +3,16 @@
   <%- include('./shared/head')%>
   <body>
     <%- include('./shared/header')%> 
-    <main>
+    <main class="mainLogin">
 <h1>Iniciar sesión</h1>
-      <form action="/login" method="post" novalidate>
+      <form  class="formLogin" action="/login" method="post" novalidate>
         <label for="emailUsuario">Email:</label>
         <input type="text" id="emailUsuario" name="emailUsuario" value="lag@gmail.com">
 
         <label for="contraseñaUsuario">Contraseña:</label>
         <input type="password" id="contraseñaUsuario" name="contraseñaUsuario" value="Aylenchu15.">
 
-        <input type="submit" value="Entrar">
+        <input class="botonLogin" type="submit" value="Entrar">
       </form>
     </main>
     <%- include('./shared/footer')%>
