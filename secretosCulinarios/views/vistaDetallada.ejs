@@ -20,16 +20,16 @@
     <img src="<%- receta.url_imagen ? `/uploads/${receta.url_imagen}` : 'https://theme-assets.getbento.com/sensei/fbd08bb.sensei/assets/images/catering-item-placeholder-704x520.png' %>" alt="<%-receta.titulo %>">
     </div>
   </div>
-  <article>
-    <pre><%- receta.pasos %></pre>
+  <article class="pasosReceta">
+    <p><%- receta.pasos %></p>
   </article>
-  <article>
+  <article class="contenedorCategorias">
     <h3>Categorías</h3>
-    <div class="contenedorCategorias">
+    <ul>
       <% for (let c of receta.categorias) { %>
-        <p class="categoria"><%- c %></p>
+        <li class="categoria"><%- c %></li>
         <% }%>
-    </div>
+    </ul>
   </article>
 </section>
    

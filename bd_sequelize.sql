@@ -162,7 +162,7 @@ END CASE;
 END //
 
 DELIMITER ;
--- Procedimiento para actualizar NOMBRE y NOMBRE DE USUARIO del perfil, nada más.
+-- Procedimiento para actualizar NOMBRE,NOMBRE DE USUARIO del perfil y foto de perfil, nada más.
 DELIMITER //
 CREATE PROCEDURE `actualizar_perfil`(IN idCuenta INT, IN nuevoNombre VARCHAR(100), IN nuevoUsuario VARCHAR(20), IN nuevaUrl VARCHAR(500))
 BEGIN

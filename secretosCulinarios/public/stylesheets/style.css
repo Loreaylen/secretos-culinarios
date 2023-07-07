@@ -28,6 +28,7 @@ a {
 main {
   width: 100%;
   height: auto;
+  padding-top: 20px;
 }
 
 .imagenParrafo img {
@@ -45,112 +46,6 @@ p, span {
   font-family: var(--texto);
   font-size: 20px;
 }
-
-/*---------HEADER ---------*/
-header{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  background-color: var(--color-principal);
-  position:relative;
-}
-.logo {
-  width: 100px;
-  height: auto;
-  display: flex;
-  align-items: center;
-}
-
-.logo img {
-  width: 100%;
-  height: auto;
-}
-
-.menuPrincipal {
-  display: flex;
-  width: 50%;
-  align-items: center;
-  justify-content: space-evenly;
-}
-
-.menuPrincipal ul {
-  width: 50%;
-  display: flex;
-  justify-content: space-around;
-}
-
-.menuPrincipal ul li {
-  list-style-type: none;
-}
-
-.menuPrincipal .menuCambiante {
-  width: 50%;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-.menuCambiante .inicioRegistro {
-  width: 100%;
-  height: 100%;
-   display: flex;
-   justify-content: space-around;
-}
-
-.menuPrincipal .toggleMenu {
-  display: none;
-}
-
- .toggleUsuario {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-  position: absolute;
-  right: 20px;
-}
-
-.menuUsuarioCtn {
-  position: absolute;
-  top:50px;
-  right: 0;
-  height: auto;
-  width: 250px;
-  background-color: var(--color-secundario);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-items: space-around;
-  padding: 20px;
-  z-index: 10000;
-  display: none;
-}
-
-.nombreUsuario {
-  text-align: center;
-}
-.menuUsuario {
-  padding:20px;
-}
-.menuUsuario li {
-  list-style-type: none;
-  height: 50px;
-}
-
-.menuUsuarioCtn a {
-  color: var(--color-principal)
-}
-
-.toggleUsuario img {
-  width: 100%;
-  height: auto;
-  border-radius: 50%;
-}
-
-.datosUsuario
 
 /*-------INICIO---------*/
 
@@ -332,13 +227,24 @@ justify-content: space-between;
 
 /*VISTA DETALLADA*/
 
-.vistaDetallada .botonVolver {
-  height: 25px;
-  padding: 10px 15px;
-  border-radius: 2px;
-  margin-left: 15px;
-  background-color: var(--color-principal);
-  color: var(--color-oscuro)
+main.vistaDetallada {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 30px;
+    height: auto;
+}
+
+main.vistaDetallada .botonVolver {
+    height: auto;
+    width: 100px;
+    padding: 10px 15px;
+    border-radius: 2px;
+    text-align: center;
+    background-color: var(--color-principal);
+    color: var(--color-oscuro);
 }
 
 .vistaDetallada .detalleUsuario {
@@ -347,7 +253,6 @@ height: auto;
 display: flex;
 align-items: center;
 justify-content: flex-start;
-padding: 50px;
 }
 
 .detalleUsuario .imagenUsuario {
@@ -361,6 +266,43 @@ padding: 50px;
   border-radius: 50%;
 }
 
+section.vistaDetallada {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.pasosReceta p {
+  width: 100%;
+  white-space: pre-wrap;
+}
+
+.contenedorCategorias h3 {
+  padding: 20px;
+}
+
+.contenedorCategorias ul {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.contenedorCategorias ul li {
+    list-style-type: none;
+    width: auto;
+    height: auto;
+    padding: 10px 15px;
+    background-color: var(--color-secundario);
+    color: var(--color-claro);
+    font-family: var(--texto);
+    border-radius: 5px;
+}
 /*Recetas Usuario*/
 
 .recetasUsuario .recetasContainer {
@@ -379,104 +321,6 @@ padding: 50px;
 .receta div img {
   width: 100%;
   height: auto;
-}
-
-@media screen  and (max-width: 800px){
-  p {
-    font-size: 16px;
-  }
-
-  a {
-    color: var(--color-principal)
-  }
-  .parrafo1 {
-    flex-direction: column;
-  }
-
-  .toggleUsuario {
-    display: none;
-  }
-
-  .menuPrincipal li, .menuPrincipal a {
-    height: 50px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .menuPrincipal {
-    flex-direction: column;
-    position: absolute;
-    background-color: var(--color-secundario);
-    top: 100px;
-    left: 0;
-    width: 100%;
-    height: auto;
-    z-index: 1000;
-    align-items: center;
-    justify-content: space-evenly;
-  }
-
-  .menuPrincipal ul {
-    width: 100%;
-    height: 100px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-}
-  
-  .menuPrincipal .menuCambiante {
-    width: 100%;
-    height: auto;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .menuCambiante .inicioRegistro {
-    width: 100%;
-    height: 100px;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-  
-.toggleMenu {
-  display: block;
-  position: absolute;
-  right: 20px;
-  width: 40px;
-  height: auto;
-}
-
-.toggleMenu span {
-  display: block;
-  height: 5px;
-  width: 100%;
-  border-radius: 2px;
-  margin-bottom: 5px;
-  background-color: var(--color-claro);
-}
-
-.menuCambiante .menuUsuarioCtn {
-  width: 100%;
-  height: auto;
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 20px;
-  top: 0;
-}
-
-.menuUsuarioCtn .datosUsuario {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 }
 
 /*GLOBAL*/
