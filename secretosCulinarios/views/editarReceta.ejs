@@ -4,7 +4,7 @@
 <body>
   <%-include('./shared/header')%>
 
-  <main>
+  <main class="mainAgregarEditarReceta">
     <h1>Editando receta: <%-receta.titulo %></h1>
     <form class="formEditarReceta" action="/usuario/recetas/editar/<%- receta.id %>?_method=PUT" method="post" novalidate enctype="multipart/form-data">
       <label for="titulo">Titulo</label>
@@ -22,17 +22,20 @@
       <textarea name="pasos" id="pasos" cols="30" rows="10"><%- receta.pasos %></textarea>
 
       <div class="contenedorCheckbox">
-            <% let check = '' %>
-            <% if (receta.categorias) {
-              check = receta.categorias.includes(c.nombre) ? 'checked' : '';
-            } %>
 
         <h3>Seleccionar una o varias categorías</h3>
+        <% let check = '' %>
         <%for (let c of categorias) {%>
-          <input type="checkbox" name="categorias" value="<%-c.id_categoria%>" id="cat<%-c.id_categoria%>" class="checkboxCategorias" <%= check %>>
-          <label for="<%-c.id_categoria%>"><%-c.nombre%></label>
+            <% if (receta.categorias) {  %>
+              <%   check = receta.categorias.includes(c.nombre) ? 'checked' : '';  %>
+              <%  } %>
+            <div class="checkboxCategorias">
+              <input type="checkbox" name="categorias" value="<%-c.id_categoria%>" id="cat<%-c.id_categoria%>" class="checkboxCategorias" <%= check %>>
+              <label for="<%-c.id_categoria%>"><%-c.nombre%></label>
+            </div>
+            <%}%>
       </div>
-      <%}%>
+  
 
       <button type="submit">Modificar</button>
     </form>

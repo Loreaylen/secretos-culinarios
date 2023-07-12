@@ -4,7 +4,7 @@
   <body>
     <%- include('./shared/header')%>
     
-    <main>
+    <main class="mainPerfil">
 <h1>Mi perfil</h1>
 
 
@@ -37,28 +37,46 @@
       <label for="mail">Email</label>
       <input type="text" name="mail" value="<%-sesion.mail%>" placeholder="<%-sesion.mail%>" disabled> 
 
-        <input type="button" value="Cambiar contraseña">
         <input type="button" class="botonEditar" value="Editar">
         <input type="submit" class="botonGuardarCambios invisible" value="Guardar" >
 
       </form>
+
+      <form class="formCambiarContraseña" action="/usuario/cambiarContraseña?_method=PUT" method="post">
+        <label for="pass1">Contraseña actual:</label>
+        <input type="password" id="pass1" name="pass1">
+
+        <label for="pass2">Nueva contraseña:</label>
+        <input type="password" id="pass2" name="pass2">
+
+        <input type="submit" value="Cambiar">
+        <button class="botonCancelarCambio">Cancelar</button>
+      </form>
+      <div class="botonesPerfil">
+        <button class="botonCambiarContraseña">Cambiar contraseña</button>
       
         <button class="botonEliminar">Eliminar cuenta</button> 
+      </div>
         
     </main>
-    <%- include('./shared/footer')%>
 
     <section class="modal invisible">
       <div class="modalContainer">
         <h2>¿Seguro que quieres eliminar tu cuenta?</h2>
         <p>Esta acción es irreversible</p>
         <div class="modalBotonesContainer">
-          <button class="botonConfirmarEliminar">Confirmar</button>
+        <form class="formEliminarCuenta" action="/usuario/perfil/eliminar?_method=DELETE" method="post" >
+          <button type="submit" class="botonConfirmarEliminar">Confirmar</button>
+        </form>
+          
           <button class="botonCancelarEliminar">Cancelar</button>
         </div>
        
       </div>
     </section>
+
+    <%- include('./shared/footer')%>
+
 
     <%- include('./shared/scripts')%>
     <script src="/javascripts/editarPerfilUsuario.js"></script>

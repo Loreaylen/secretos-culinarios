@@ -1,25 +1,144 @@
-body {
+:root {
+  --titulo: 'Poppins', sans-serif;
+  --texto: 'Josefin Sans', sans-serif;
+  --menu: 'Montserrat', sans-serif;
+  --color-principal: #ff5b44;
+  --color-secundario: #ffba47;
+  --color-oscuro: #0b0803;
+  --color-claro: #fff;
+}
+
+/*
+#ff5b44
+#ffba47
+*/
+
+*{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+body {
+  position: relative;
+  height: auto;
 }
 
 a {
-  color: #00B7FF;
+  color: var(--color-secundario);
+  text-decoration: none;
+  font-family: var(--menu);
 }
 
+main {
+  width: 100%;
+  height: auto;
+  padding-top: 20px;
+  min-height: 70vh;
+}
 
+.imagenParrafo img {
+  width:100%;
+  height: auto;
+}
+
+h1, h2, h3 {
+  font-family: var(--titulo);
+  text-align: center;
+  width: 100%;
+}
+
+p, span {
+  font-family: var(--texto);
+  font-size: 20px;
+}
+
+/*-------INICIO---------*/
+
+.presentacionInicio {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.parrafo1 {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.parrafo1 .imagenParrafo {
+  width: 100%;
+  height: auto;
+}
+
+.parrafo1 .textoParrafo {
+  padding: 20px;
+}
+
+.parrafo2 {
+  position:relative;
+  width: 100%;
+  height: auto;
+  background-image: url('../images/food-g2fd3e517f_1280.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom left;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.parrafo2 h2 {
+  height: 30px;
+  margin: 10px;
+}
+
+.parrafo2 .textoParrafo {
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.parrafo2:before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.parrafo2 > * {
+  color:#fff;
+}
 
 .menuUsuarioCtn .fotoPerfil  {
-width: 200px;
-height: auto;
-
+width: 100px;
+height: 100px;
 }
 
 .fotoPerfil img {
   width: 100px;
   height: auto;
+  border-radius: 50%;
+}
+
+.nombreUsuario {
+  color: var(--color-claro);
+  font-size: 15px;
+  text-transform: uppercase;
 }
 
 .avatarUsuario {
@@ -35,7 +154,7 @@ height: auto;
 
 .modal {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   position: absolute;
   top:0;
   left: 0;
@@ -65,6 +184,371 @@ height: auto;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+}
+
+/*RECETAS*/
+.todasLasRecetas {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 20px;
+}
+
+.contenedorReceta {
+  width: 100%;
+height: auto;
+}
+
+.contenedorReceta a{
+width: 100%;
+height: auto;
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+.contenedorReceta .contenedorImagen {
+  width: 300px;
+  height: auto;
+}
+
+.contenedorReceta .contenedorImagen img {
+  width: 100%;
+  height: auto;
+}
+
+.usuarioContenedor div {
+  width: 50px;
+  height: 50px;
+}
+
+.usuarioContenedor div img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.registerMainContainer {
+  min-height: 77vh;
+}
+
+.formLabelError {
+  color: red;
+}
+
+.registerMainContainer form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center; 
+}
+
+
+.registerMainContainer form button {
+  background: none;
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid black;
+}
+
+/*VISTA DETALLADA*/
+
+main.vistaDetallada {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 30px;
+    height: auto;
+}
+
+main.vistaDetallada .botonVolver {
+    height: auto;
+    width: 100px;
+    padding: 10px 15px;
+    border-radius: 2px;
+    text-align: center;
+    background-color: var(--color-principal);
+    color: var(--color-oscuro);
+}
+
+.vistaDetallada .detalleUsuario {
+width: 100%;
+height: auto;
+display: flex;
+align-items: center;
+justify-content: flex-start;
+}
+
+.detalleUsuario .imagenUsuario {
+  width: 50px;
+  height: 50px;
+}
+
+.imagenUsuario img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+section.vistaDetallada {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+section.vistaDetallada div {
+  width: 300px;
+  height: auto;
+}
+
+section.vistaDetallada div img {
+  width: 100%;
+  height: auto;
+}
+
+.pasosReceta p {
+  width: 100%;
+  white-space: pre-wrap;
+}
+
+.contenedorCategorias h3 {
+  padding: 20px;
+}
+
+.contenedorCategorias ul {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.contenedorCategorias ul li {
+    list-style-type: none;
+    width: auto;
+    height: auto;
+    padding: 10px 15px;
+    background-color: var(--color-secundario);
+    color: var(--color-claro);
+    font-family: var(--texto);
+    border-radius: 5px;
+}
+/*Recetas Usuario*/
+
+.recetasUsuario .recetasContainer {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.recetasContainer .receta div {
+  width: 300px;
+  height: auto;
+}
+
+.receta div img {
+  width: 100%;
+  height: auto;
+}
+
+/*LOGIN*/
+
+.mainLogin {
+  height: 710px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 30px;
+}
+
+.formLogin {
+  height: auto;
+  width: 320px;
+  padding: 30px;
+  border: 1px solid var(--color-oscuro);
+  border-radius: 10px;
+  margin: 30px;
+}
+
+.formLogin input {
+  height: 35px;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid gray;
+  margin-bottom: 15px;
+}
+
+.formLogin label {
+  height: 35px;
+  width: 100%;
+  font-family: var(--menu);
+  font-size: 18px;
+}
+
+.botonLogin {
+  background-color: var(--color-secundario);
+  color: var(--color-claro);
+  border: none;
+  font-family: var(--texto);
+  font-size: 20px;
+}
+
+/*MIS RECETAS*/
+
+.recetasUsuario {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap:30px;
+  padding: 30px;
+  align-items: center;
+}
+
+.recetasContainer {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.recetasContainer .receta {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.contenedorBotones {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.editarReceta, .eliminarReceta {
+  padding: 15px;
+  background-color: var(--color-principal);
+  color: var(--color-claro);
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/*PERFIL*/
+
+.mainPerfil {
+  min-height: 70vh;
+  padding: 30px;
+}
+
+.formEditarPerfil {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.formCambiarContraseña {
+  display: none;
+}
+
+.mainPerfil .botonesPerfil {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.botonesPerfil button, .botonEditar, .botonGuardarCambios {
+  height: auto;
+  width: auto;
+  padding: 15px;
+  background-color: var(--color-secundario);
+  font-family: var(--texto);
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+}
+
+/*AGREGAR O EDITAR RECETA*/
+
+.mainAgregarEditarReceta {
+  min-height: 70vh;
+  padding: 30px;
+}
+
+.mainAgregarEditarReceta form {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  gap:20px;
+}
+
+.mainAgregarEditarReceta form textarea {
+  width: 100%;
+  min-height: 400px;
+}
+
+.contenedorCheckbox {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.checkboxCategoriasContainer {
+  width: 200px;
+  height: auto;
+  padding: 15px 0;
+  display: flex;
+  gap: 5px;
+}
+
+.mainAgregarEditarReceta .botonAgregar {
+  height: auto;
+  width: auto;
+  padding: 15px;
+  background-color: var(--color-secundario);
+  font-family: var(--texto);
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+}
+
+.mainAgregarEditarReceta .imagenReceta {
+  width: 300px;
+  height: auto;
+}
+
+.mainAgregarEditarReceta .imagenReceta  img{
+  width: 100%;
+  height: auto;
 }
 
 

@@ -2,7 +2,10 @@ const express = require('express')
 const router = express.Router()
 const multer = require('multer');
 const { cargarPerfil, editarPerfil, eliminarCuenta, cargarRecetasUsuario, cargarError,
-mostrarVistaAgregarReceta, agregarReceta, eliminarReceta, editarReceta, mostrarVistaEditarReceta } = require('../controllers/usuarioControl')
+mostrarVistaAgregarReceta, agregarReceta, eliminarReceta, editarReceta, mostrarVistaEditarReceta,
+cambiarContraseña } = require('../controllers/usuarioControl')
+
+//configuración de multer para nombrar los archivos de imagen y establecer el destino
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -21,6 +24,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage: storage});
 
+// No se puede acceder solamente a /usuario
 router.get('/', function(req,res){
   res.render('errorPersonalizado', {nombrePag: 'Error 404', message: 'No se encontró la página solicitada', status:'404'})
 })
@@ -33,6 +37,7 @@ router.get('/*', cargarError)
 router.post('/recetas/agregar', upload.single('imagenReceta'), agregarReceta)
 
 router.put('/perfil', upload.single('subirAvatar'), editarPerfil )
+router.put('/perfil/cambiarContraseña', cambiarContraseña)
 router.put('/recetas/editar/:id', upload.single('imagenReceta'), editarReceta)
 
 router.delete('/perfil/eliminar', eliminarCuenta )

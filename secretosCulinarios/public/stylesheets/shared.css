@@ -1,0 +1,146 @@
+/*---------HEADER ---------*/
+header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background-color: var(--color-principal);
+  position:relative;
+}
+.logo {
+  width: 100px;
+  height: auto;
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 100%;
+  height: auto;
+}
+
+.menuPrincipal {
+  display: flex;
+  width: 50%;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.menuPrincipal ul {
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.menuPrincipal ul li {
+  list-style-type: none;
+}
+
+.menuPrincipal .menuCambiante {
+  width: 50%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.menuCambiante .inicioRegistro {
+  width: 100%;
+  height: 100%;
+   display: flex;
+   justify-content: space-around;
+}
+
+.menuPrincipal .toggleMenu {
+  display: none;
+}
+
+ .toggleUsuario {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  right: 20px;
+}
+
+.menuUsuarioCtn {
+  position: absolute;
+  top:50px;
+  right: 0;
+  height: auto;
+  width: 250px;
+  background-color: var(--color-secundario);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: space-around;
+  padding: 20px;
+  z-index: 10000;
+  display: none;
+}
+
+.nombreUsuario {
+  text-align: center;
+}
+.menuUsuario {
+  padding:20px;
+}
+.menuUsuario li {
+  list-style-type: none;
+  height: 50px;
+}
+
+.menuUsuarioCtn a {
+  color: var(--color-principal)
+}
+
+.toggleUsuario img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+
+/*-------------FOOTER---------*/
+
+footer {
+  width: 100%;
+  height: auto;
+  position: relative;
+  bottom: 0;
+  padding: 30px;
+  background-color: var(--color-principal);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoFooter {
+  width: 100px;
+  height: auto;
+}
+
+.logoFooter img {
+  width: 100%;
+  height: auto;
+}
+
+.redesSociales {
+ display: flex;
+ align-items: center;
+ justify-content: space-around;
+ gap: 10px
+}
+
+.redesSociales li {
+  height: auto;
+  width: 130px;
+  padding: 15px 0;
+  list-style-type: none;
+}
+
+.redesSociales li a {
+  color: var(--color-claro)
+}

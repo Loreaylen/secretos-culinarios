@@ -4,11 +4,11 @@
   <body>
     <%- include('./shared/header')%>
     
-    <main>
+    <main class="recetasUsuario">
 <h1><%-nombrePag%></h1>
 
 <%if(recetas.length > 0) { %>
-<a href="/usuario/recetas/agregar">Agregar receta</a>
+<a class="botonAgregarReceta" href="/usuario/recetas/agregar">Agregar receta</a>
 <section class="recetasContainer">
 <% for (let receta of recetas) { %>
 <article class="receta" id="<%- receta.id %>">
@@ -19,7 +19,7 @@
 <h2><%- receta.titulo %></h2>
 </div>
 <div class="contenedorBotones">
-  <a href="/usuario/recetas/editar/<%- receta.id %>">Editar</a>
+  <a class="editarReceta"  href="/usuario/recetas/editar/<%- receta.id %>">Editar</a>
   <form action="/usuario/recetas/eliminar/<%= receta.id%>?_method=DELETE" method="POST">
     
     <button class="eliminarReceta">Eliminar</button>

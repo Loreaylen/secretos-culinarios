@@ -4,7 +4,7 @@
 <body>
   <%-include('./shared/header')%>
 
-  <main>
+  <main class="registerMainContainer">
     <h1>Registrate</h1>
     <form action="/register" method="post" novalidate>
       <label for="nombre">Nombre:</label>
@@ -12,7 +12,7 @@
       <% if(resultadosVal.find(el => el.path === 'nombre')) { %>
         <% for(let error of resultadosVal) { %>
           <% if(error.path === 'nombre') { %>
-            <span><%- error.msg %></span>
+            <span class="formLabelError"><%- error.msg %></span>
           <% } %>
         <% } %>
       <% } %>
@@ -22,7 +22,7 @@
       <% if(resultadosVal.find(el => el.path === 'nombreUsuario')) { %>
         <% for(let error of resultadosVal) { %>
           <% if(error.path === 'nombreUsuario') { %>
-            <span><%- error.msg %></span>
+            <span class="formLabelError"><%- error.msg %></span>
           <% } %>
         <% } %>
       <% } %>
@@ -32,7 +32,7 @@
       <% if(resultadosVal.find(el => el.path === 'email')) { %>
         <% for(let error of resultadosVal) { %>
           <% if(error.path === 'email') { %>
-            <span><%- error.msg %></span>
+            <span class="formLabelError"><%- error.msg %></span>
           <% } %>
         <% } %>
       <% } %>
@@ -42,7 +42,7 @@
       <% if(resultadosVal.find(el => el.path === 'contraseña')) { %>
         <% for(let error of resultadosVal) { %>
           <% if(error.path === 'contraseña') { %>
-            <span><%- error.msg %></span>
+            <span class="formLabelError"><%- error.msg %></span>
           <% } %>
         <% } %>
       <% } %>
@@ -52,7 +52,7 @@
       <% if(resultadosVal.find(el => el.path === 'contraseña2')) { %>
         <% for(let error of resultadosVal) { %>
           <% if(error.path === 'contraseña2') { %>
-            <span><%- error.msg %></span>
+            <span class="formLabelError"><%- error.msg %></span>
           <% } %>
         <% } %>
       <% } %>

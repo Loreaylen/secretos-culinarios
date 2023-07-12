@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 const sequelize = require("../database/connect.js");
 const Receta = require("../models/ManyToMany/Receta.js");
 const Categoria = require("../models/ManyToMany/Categoria.js");
@@ -69,8 +69,10 @@ const usuarioControl = {
             return;
           }
           console.log("SESION DESTRUIDA");
+          setTimeout(()=> {
+            res.redirect('/')
+          }, 1000)
         });
-        return true;
       } else throw Error("El procedimiento falló");
     } catch (err) {
       console.log("no se pudo eliminar el usuario, ", err);
@@ -193,6 +195,9 @@ const usuarioControl = {
     const idReceta = req.params.id
     const [data, metadata] = await sequelize.query(`CALL traer_receta_detallada(${idReceta}, ${req.session.user.id})`)
     const [categorias, meta] = await sequelize.query("SELECT * FROM categorias;")
+    
+    const arrCategorias = data.categorias.split(',')
+    data.categorias = arrCategorias
     console.log(data)
     res.render('editarReceta', {nombrePag: 'Editar Receta', sesion: req.session.user, receta: data, categorias: categorias })
   },
@@ -227,6 +232,9 @@ const usuarioControl = {
           res.redirect("/usuario/recetas");
         })
         .catch((err) => console.log(err));
+  },
+  cambiarContraseña: async function (req, res) {
+
   }
 };
 
