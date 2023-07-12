@@ -161,35 +161,6 @@ CASE
 END CASE;
 END //
 
-DELIMITER ;
--- Procedimiento para actualizar NOMBRE,NOMBRE DE USUARIO del perfil y foto de perfil, nada más.
-DELIMITER //
-CREATE PROCEDURE `actualizar_perfil`(IN idCuenta INT, IN nuevoNombre VARCHAR(100), IN nuevoUsuario VARCHAR(20), IN nuevaUrl VARCHAR(500))
-BEGIN
-UPDATE usuarios
-SET nombre = nuevoNombre, usuario = nuevoUsuario, url_avatar = nuevaUrl
-WHERE id = idCuenta;
-SELECT nombre AS nombre, usuario AS usuario FROM usuarios WHERE id = idCuenta ;
-END //
-
-DROP PROCEDURE actualizar_perfil;
-
--- Procedimiento para eliminar la cuenta
-DELIMITER //
-CREATE PROCEDURE `eliminar_cuenta`(IN idCuenta INT)
-BEGIN
-IF EXISTS(SELECT * FROM usuarios WHERE id = idCuenta)
-THEN 
-DELETE FROM usuarios WHERE id = idCuenta;
-SELECT TRUE AS resultado;
-ELSE 
-SELECT FALSE AS resultado;
-END IF;
-END //
-
-SELECT * FROM usuarios;
-DELIMITER ;
-
 -- Procedimiento para traer todas las recetas o las recetas por usuario
 DELIMITER //
 CREATE PROCEDURE `traer_recetas`(IN idUsuario INT)
@@ -216,22 +187,43 @@ END //
 DELIMITER //
 CALL traer_recetas(29);
 
-SELECT * FROM usuarios;
+-- Procedimiento para ACTUALIZAR RECETA
+DELIMITER //
+CREATE PROCEDURE `actualizar_receta`(IN idReceta INT, IN nuevoTitulo VARCHAR(150), IN nuevosPasos TEXT, IN nuevaImagen VARCHAR(500))
+BEGIN
+UPDATE recetas
+SET titulo = nuevoTitulo, pasos = nuevosPasos, url_imagen = nuevaImagen, updatedAt = CURDATE()
+WHERE id = idReceta;
 
-DROP PROCEDURE traer_recetas;
-SELECT * FROM recetas;
+DELETE FROM categorias_recetas WHERE id_receta = idReceta;
+END //
 
--- DELIMITER //
--- CREATE PROCEDURE `categorias_por_receta`(IN idReceta INT)
--- BEGIN
--- SELECT c.nombre 
--- FROM categorias_recetas cr
--- LEFT JOIN categorias c
--- ON cr.id_categoria = c.id_categoria
--- WHERE id_receta = idReceta;
--- END //
+DELIMITER ;
+-- Procedimiento para actualizar NOMBRE,NOMBRE DE USUARIO del perfil y foto de perfil, nada más.
+DELIMITER //
+CREATE PROCEDURE `actualizar_perfil`(IN idCuenta INT, IN nuevoNombre VARCHAR(100), IN nuevoUsuario VARCHAR(20), IN nuevaUrl VARCHAR(500))
+BEGIN
+UPDATE usuarios
+SET nombre = nuevoNombre, usuario = nuevoUsuario, url_avatar = nuevaUrl
+WHERE id = idCuenta;
+SELECT nombre AS nombre, usuario AS usuario FROM usuarios WHERE id = idCuenta ;
+END //
 
--- DROP PROCEDURE categorias_por_receta;
+
+
+-- Procedimiento para eliminar la cuenta
+DELIMITER //
+CREATE PROCEDURE `eliminar_cuenta`(IN idCuenta INT)
+BEGIN
+IF EXISTS(SELECT * FROM usuarios WHERE id = idCuenta)
+THEN 
+DELETE FROM usuarios WHERE id = idCuenta;
+SELECT TRUE AS resultado;
+ELSE 
+SELECT FALSE AS resultado;
+END IF;
+END //
+
 
 DELIMITER //
 CREATE PROCEDURE `traer_receta_detallada`(IN idReceta INT, IN idUser INT)
@@ -244,9 +236,6 @@ WHERE r.id = idReceta AND r.id_usuario = idUser
 GROUP BY r.id;
 END //
 
-DROP PROCEDURE traer_receta_detallada;
-
-SELECT * FROM recetas WHERE id_usuario = 29;
 
 -- Trigger para eliminar las categorías de la receta eliminada
 DELIMITER //
@@ -256,6 +245,7 @@ BEGIN
 	DELETE FROM categorias_recetas WHERE id_receta = OLD.id;
 END //
 
+-- Triger para eliminar las recetas del usuario
 DELIMITER //
 CREATE TRIGGER eliminar_recetas_usuario BEFORE DELETE ON usuarios
 FOR EACH ROW
@@ -263,22 +253,5 @@ BEGIN
 	DELETE FROM recetas WHERE id_usuario = OLD.id;
 END //
 
-SELECT * FROM recetas;
-
-DELIMITER //
-CREATE PROCEDURE `actualizar_receta`(IN idReceta INT, IN nuevoTitulo VARCHAR(150), IN nuevosPasos TEXT, IN nuevaImagen VARCHAR(500))
-BEGIN
-UPDATE recetas
-SET titulo = nuevoTitulo, pasos = nuevosPasos, url_imagen = nuevaImagen, updatedAt = CURDATE()
-WHERE id = idReceta;
-
-DELETE FROM categorias_recetas WHERE id_receta = idReceta;
-END //
-
-SELECT * FROM categorias_recetas;
 
 INSERT INTO categorias_recetas(id_receta, id_categoria) VALUES (29,1);
-
-CALL traer_recetas(29);
-
-SELECT * FROM usuarios;

@@ -5,6 +5,8 @@ const { cargarPerfil, editarPerfil, eliminarCuenta, cargarRecetasUsuario, cargar
 mostrarVistaAgregarReceta, agregarReceta, eliminarReceta, editarReceta, mostrarVistaEditarReceta,
 cambiarContraseña } = require('../controllers/usuarioControl')
 
+//configuración de multer para nombrar los archivos de imagen y establecer el destino
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/uploads'); 
@@ -22,6 +24,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage: storage});
 
+// No se puede acceder solamente a /usuario
 router.get('/', function(req,res){
   res.render('errorPersonalizado', {nombrePag: 'Error 404', message: 'No se encontró la página solicitada', status:'404'})
 })

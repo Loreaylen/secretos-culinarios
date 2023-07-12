@@ -108,6 +108,8 @@ header{
 footer {
   width: 100%;
   height: auto;
+  position: relative;
+  bottom: 0;
   padding: 30px;
   background-color: var(--color-principal);
   display: flex;

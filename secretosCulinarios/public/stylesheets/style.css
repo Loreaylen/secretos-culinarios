@@ -19,6 +19,11 @@
   box-sizing: border-box;
 }
 
+body {
+  position: relative;
+  height: auto;
+}
+
 a {
   color: var(--color-secundario);
   text-decoration: none;
@@ -29,6 +34,7 @@ main {
   width: 100%;
   height: auto;
   padding-top: 20px;
+  min-height: 70vh;
 }
 
 .imagenParrafo img {
@@ -148,7 +154,7 @@ height: 100px;
 
 .modal {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   position: absolute;
   top:0;
   left: 0;
@@ -225,6 +231,30 @@ justify-content: space-between;
   border-radius: 50%;
 }
 
+.registerMainContainer {
+  min-height: 77vh;
+}
+
+.formLabelError {
+  color: red;
+}
+
+.registerMainContainer form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center; 
+}
+
+
+.registerMainContainer form button {
+  background: none;
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid black;
+}
+
 /*VISTA DETALLADA*/
 
 main.vistaDetallada {
@@ -272,6 +302,16 @@ section.vistaDetallada {
   gap: 30px;
   align-items: center;
   justify-content: space-around;
+}
+
+section.vistaDetallada div {
+  width: 300px;
+  height: auto;
+}
+
+section.vistaDetallada div img {
+  width: 100%;
+  height: auto;
 }
 
 .pasosReceta p {
@@ -410,7 +450,107 @@ section.vistaDetallada {
   cursor: pointer;
 }
 
-/*GLOBAL*/
+/*PERFIL*/
+
+.mainPerfil {
+  min-height: 70vh;
+  padding: 30px;
+}
+
+.formEditarPerfil {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.formCambiarContraseña {
+  display: none;
+}
+
+.mainPerfil .botonesPerfil {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.botonesPerfil button, .botonEditar, .botonGuardarCambios {
+  height: auto;
+  width: auto;
+  padding: 15px;
+  background-color: var(--color-secundario);
+  font-family: var(--texto);
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+}
+
+/*AGREGAR O EDITAR RECETA*/
+
+.mainAgregarEditarReceta {
+  min-height: 70vh;
+  padding: 30px;
+}
+
+.mainAgregarEditarReceta form {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  gap:20px;
+}
+
+.mainAgregarEditarReceta form textarea {
+  width: 100%;
+  min-height: 400px;
+}
+
+.contenedorCheckbox {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.checkboxCategoriasContainer {
+  width: 200px;
+  height: auto;
+  padding: 15px 0;
+  display: flex;
+  gap: 5px;
+}
+
+.mainAgregarEditarReceta .botonAgregar {
+  height: auto;
+  width: auto;
+  padding: 15px;
+  background-color: var(--color-secundario);
+  font-family: var(--texto);
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+}
+
+.mainAgregarEditarReceta .imagenReceta {
+  width: 300px;
+  height: auto;
+}
+
+.mainAgregarEditarReceta .imagenReceta  img{
+  width: 100%;
+  height: auto;
+}
+
 
 .invisible {
   display: none;

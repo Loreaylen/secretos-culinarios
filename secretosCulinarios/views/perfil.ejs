@@ -4,7 +4,7 @@
   <body>
     <%- include('./shared/header')%>
     
-    <main>
+    <main class="mainPerfil">
 <h1>Mi perfil</h1>
 
 
@@ -52,12 +52,13 @@
         <input type="submit" value="Cambiar">
         <button class="botonCancelarCambio">Cancelar</button>
       </form>
-      <button class="botonCambiarContraseña">Cambiar contraseña</button>
+      <div class="botonesPerfil">
+        <button class="botonCambiarContraseña">Cambiar contraseña</button>
       
         <button class="botonEliminar">Eliminar cuenta</button> 
+      </div>
         
     </main>
-    <%- include('./shared/footer')%>
 
     <section class="modal invisible">
       <div class="modalContainer">
@@ -73,6 +74,9 @@
        
       </div>
     </section>
+
+    <%- include('./shared/footer')%>
+
 
     <%- include('./shared/scripts')%>
     <script src="/javascripts/editarPerfilUsuario.js"></script>

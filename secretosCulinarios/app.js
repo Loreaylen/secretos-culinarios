@@ -6,7 +6,7 @@ var logger = require('morgan');
 const session = require('express-session')
 const methodOverride = require('method-override')
 
-
+//Conexión a Base de Datos
 const sequelize = require('./database/connect.js')
 const conexionDB = async () => {
   try {
@@ -27,7 +27,7 @@ const usuarioRouter = require('./routes/usuario');
 
 var app = express();
 
-//Configurar sesión
+//Configurar sesión con express session
 app.use(session({
   secret: 'asdjgesougbjnsdf123',
   resave: true,

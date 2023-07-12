@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 const sequelize = require("../database/connect.js");
 const Receta = require("../models/ManyToMany/Receta.js");
 const Categoria = require("../models/ManyToMany/Categoria.js");
